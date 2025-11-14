@@ -218,7 +218,7 @@ const Home: NextPage<HomeProps> = ({ recentPosts }) => {
             <HighlightTitle>🚀 Lead Software Engineer at ABB</HighlightTitle>
             <HighlightDescription>
               Leading frontend development for the Mortgage Tribe, building scalable micro-frontend architectures
-              that automate banking processes. Mentored junior engineers on best practices and architecture patterns.
+              that automate banking processes. Mentoring junior engineers on best practices and architecture patterns.
             </HighlightDescription>
           </HighlightCard>
 
