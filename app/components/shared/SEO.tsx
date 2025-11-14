@@ -11,8 +11,8 @@ interface SEOProps {
 }
 
 const SEO: React.FC<SEOProps> = ({
-  title = 'Nasir Movlamov - Lead Software Engineer & AI Specialist',
-  description = 'Lead Software Engineer at ABB specializing in micro-frontend architectures, React ecosystems, and AI. Master\'s in Artificial Intelligence. Building scalable, modern web applications.',
+  title = 'Nasir Movlamov - Lead Software Engineer',
+  description = 'Lead Software Engineer at ABB specializing in micro-frontend architectures, React ecosystems, and scalable web applications. Building modern, performant software solutions.',
   image = 'https://www.nasirmovlamov.com/og-image.png',
   url = 'https://www.nasirmovlamov.com',
   type = 'website',
