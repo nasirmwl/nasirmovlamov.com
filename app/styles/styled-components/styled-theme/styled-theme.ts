@@ -2,136 +2,93 @@ import * as boxshadows from '../styled-boxshadows/styled-boxshadows';
 import * as colors from '../styled-colors/styled-colors';
 
 export const lightTheme = {
-  body: colors.black_1,
-  // text: '#363537',
-  // toggleBorder: '#FFF',
-  // toggleTheme: '0px',
-  // toggleThemeColor: '#00090E',
-  // themeTogglerCont: '#FFFFFF',
-  // themeTogglerContBorder: 'black',
-  // backgroundMain: '#00090e',
+  body: colors.bg_primary,
 
   colors: {
-    black_1: colors.inverse_black_1,
-    gray_1: colors.inverse_gray_1,
-    gray_2: colors.inverse_gray_2,
-    gray_3: colors.inverse_gray_3,
-    white_1: colors.inverse_white_1,
-    white_2: colors.inverse_white_2,
-    blue_1: colors.inverse_blue_1,
-    // blue_2: colors.blue_2,
-    // blue_3: colors.blue_3,
-
-    // orange_1: colors.orange_1,
-    // orange_2: colors.orange_2,
-
-    // green_1: colors.green_1,
-
-    // red_1: colors.red_1,
+    background: colors.bg_primary,
+    backgroundSecondary: colors.bg_secondary,
+    backgroundTertiary: colors.bg_tertiary,
+    text: colors.text_primary,
+    textSecondary: colors.text_secondary,
+    textTertiary: colors.text_tertiary,
+    textMuted: colors.text_muted,
+    primary: colors.accent_primary,
+    primaryHover: colors.accent_hover,
+    link: colors.accent_primary,
+    linkHover: colors.accent_hover,
+    border: colors.border_light,
+    borderMedium: colors.border_medium,
+    borderLight: colors.border_light,
+    
+    // Code colors
+    codeBackground: colors.code_bg,
+    codeText: colors.code_text,
+    codeBorder: colors.code_border,
+    
+    // Legacy support
+    black_1: colors.bg_tertiary,
+    gray_1: colors.bg_tertiary,
+    gray_2: colors.border_medium,
+    gray_3: colors.text_muted,
+    gray_4: colors.text_tertiary,
+    white_1: colors.text_primary,
+    white_2: colors.text_secondary,
+    white_3: colors.text_tertiary,
+    pink_1: colors.accent_primary,
+    pink_2: colors.accent_hover,
+    pink_3: colors.accent_hover,
+    blue_1: colors.accent_primary,
   },
 
   backgrounds: {
-    // background1: colors.black_1,
-    // background2: colors.black_2,
-    // background3: colors.black_3,
-    // background4: colors.gray_6,
-    // background5: colors.blue_3,
-    // background6: colors.white_1,
-    // background7: colors.gray_2,
-    // background8: colors.orange_2,
-    // background9: colors.gray_4,
-    // background10: colors.red_1,
+    primary: colors.bg_primary,
+    secondary: colors.bg_secondary,
+    sidebar: colors.bg_secondary,
   },
 
-  boxshadows: {
-    // boxshadow1: boxshadows.bx_shadow_dark1,
-    // boxshadow2: boxshadows.bx_shadow_dark2,
-    // boxshadow3: boxshadows.bx_shadow_dark3,
-    // boxshadow4: boxshadows.bx_shadow_dark4,
-    // boxshadow5: boxshadows.bx_shadow_dark5,
-    // boxshadow6: boxshadows.bx_shadow_dark6,
-    // boxshadow7: boxshadows.bx_shadow_dark7,
-    // boxshadow8: boxshadows.bx_shadow_dark8,
-    // boxshadow9: boxshadows.bx_shadow_dark9,
-    // boxshadow10: boxshadows.bx_shadow_dark10,
-    // boxshadow11: boxshadows.bx_shadow_dark11,
-  },
+  boxshadows: {},
 
   titles: {
-    title: colors.white_1,
-    subTitle: colors.white_2,
+    title: colors.text_primary,
+    subTitle: colors.text_secondary,
     hover:{
-      title: colors.white_1,
-      subTitle: colors.white_2,
+      title: colors.text_primary,
+      subTitle: colors.text_secondary,
     },
     focus:{
-      title: colors.white_1,
-      subTitle: colors.white_2,
+      title: colors.text_primary,
+      subTitle: colors.text_secondary,
     }
   },
 
   texts: {
-    body:colors.white_2,
-    side:colors.gray_2,
-    quote:colors.gray_2,
-    link:colors.blue_1,
+    body: colors.text_secondary,
+    side: colors.text_tertiary,
+    quote: colors.text_tertiary,
+    link: colors.accent_primary,
     hover :{
-      body:colors.white_2,
-      side:colors.gray_2,
-      quote:colors.gray_2,
-      link:colors.blue_1,
+      body: colors.text_secondary,
+      side: colors.text_tertiary,
+      quote: colors.text_tertiary,
+      link: colors.accent_hover,
     },
     focus:{
-      body:colors.white_2,
-      side:colors.white_1,
-      quote:colors.gray_2,
-      link:colors.blue_1,
+      body: colors.text_secondary,
+      side: colors.text_primary,
+      quote: colors.text_tertiary,
+      link: colors.accent_hover,
     }
-    // text1: colors.white_1,
-    // text2: colors.gray_1,
-    // text3: colors.gray_3,
-    // text4: colors.white_2,
-    // text5: colors.black_3,
-    // text6: colors.orange_1,
-    // text7: colors.gray_2,
-    // text8: colors.orange_2,
-    // text9: colors.blue_1,
-    // text10: colors.red_1,
-    // text11: colors.gray_4,
   },
 
-  sidecolors: {
-    // sidecolor1: colors.gray_1,
-    // sidecolor2: colors.gray_2,
-    // sidecolor3: colors.gray_3,
-    // sidecolor4: colors.orange_2,
-  },
+  sidecolors: {},
 
+  text_hover: {},
 
+  background_hover: {},
 
-  text_hover: {
-    // hover1: colors.orange_1,
-    // hover2: colors.white_2,
-    // hover3: colors.gray_2,
-  },
+  color_hover: {},
 
-  background_hover: {
-    // hover1: colors.black_3,
-    // hover2: colors.gray_2,
-    // hover3: colors.white_2,
-    // hover4: colors.black_1,
-  },
-
-  color_hover: {
-    // hover1: colors.white_2,
-    // hover2: colors.gray_2,
-  },
-
-  boxshadow_hover: {
-    // hover1: boxshadows.bx_shadow_dark7,
-    // hover2: boxshadows.bx_shadow_dark5,
-    // hover3: boxshadows.bx_shadow_dark6,
-  },
+  boxshadow_hover: {},
 
   font:{
     sizes:{
@@ -140,6 +97,7 @@ export const lightTheme = {
       side: '1rem',
       quote: '1rem',
       link: '1.1rem',
+      body: '1.1rem',
       hover: {
         body: '1rem',
         title: '1rem',
@@ -156,143 +114,102 @@ export const lightTheme = {
         quote: '1rem',
         link: '1.1rem',
       }
+    },
+    families: {
+      body: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      heading: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     }
-
-
   }
 }
 
 export const darkTheme = {
-  body: colors.black_1,
-  // text: '#363537',
-  // toggleBorder: '#FFF',
-  // toggleTheme: '0px',
-  // toggleThemeColor: '#00090E',
-  // themeTogglerCont: '#FFFFFF',
-  // themeTogglerContBorder: 'black',
-  // backgroundMain: '#00090e',
+  body: colors.dark_bg_primary,
 
   colors: {
+    background: colors.dark_bg_primary,
+    backgroundSecondary: colors.dark_bg_secondary,
+    backgroundTertiary: colors.dark_bg_tertiary,
+    text: colors.dark_text_primary,
+    textSecondary: colors.dark_text_secondary,
+    textTertiary: colors.dark_text_tertiary,
+    textMuted: colors.dark_text_muted,
+    primary: colors.dark_accent_primary,
+    primaryHover: colors.dark_accent_hover,
+    link: colors.dark_accent_primary,
+    linkHover: colors.dark_accent_hover,
+    border: colors.dark_border_light,
+    borderMedium: colors.dark_border_medium,
+    borderLight: colors.dark_border_light,
+    
+    // Code colors
+    codeBackground: colors.dark_code_bg,
+    codeText: colors.dark_code_text,
+    codeBorder: colors.dark_code_border,
+    
+    // Legacy support
     black_1: colors.black_1,
     gray_1: colors.gray_1,
     gray_2: colors.gray_2,
     gray_3: colors.gray_3,
+    gray_4: colors.gray_4,
     white_1: colors.white_1,
     white_2: colors.white_2,
+    white_3: colors.white_3,
+    pink_1: colors.pink_1,
+    pink_2: colors.pink_2,
+    pink_3: colors.pink_3,
     blue_1: colors.blue_1,
-    // blue_2: colors.blue_2,
-    // blue_3: colors.blue_3,
-
-    // orange_1: colors.orange_1,
-    // orange_2: colors.orange_2,
-
-    // green_1: colors.green_1,
-
-    // red_1: colors.red_1,
   },
 
   backgrounds: {
-    // background1: colors.black_1,
-    // background2: colors.black_2,
-    // background3: colors.black_3,
-    // background4: colors.gray_6,
-    // background5: colors.blue_3,
-    // background6: colors.white_1,
-    // background7: colors.gray_2,
-    // background8: colors.orange_2,
-    // background9: colors.gray_4,
-    // background10: colors.red_1,
+    primary: colors.dark_bg_primary,
+    secondary: colors.dark_bg_secondary,
+    sidebar: colors.dark_bg_secondary,
   },
 
-  boxshadows: {
-    // boxshadow1: boxshadows.bx_shadow_dark1,
-    // boxshadow2: boxshadows.bx_shadow_dark2,
-    // boxshadow3: boxshadows.bx_shadow_dark3,
-    // boxshadow4: boxshadows.bx_shadow_dark4,
-    // boxshadow5: boxshadows.bx_shadow_dark5,
-    // boxshadow6: boxshadows.bx_shadow_dark6,
-    // boxshadow7: boxshadows.bx_shadow_dark7,
-    // boxshadow8: boxshadows.bx_shadow_dark8,
-    // boxshadow9: boxshadows.bx_shadow_dark9,
-    // boxshadow10: boxshadows.bx_shadow_dark10,
-    // boxshadow11: boxshadows.bx_shadow_dark11,
-  },
+  boxshadows: {},
 
   titles: {
-    title: colors.white_1,
-    subTitle: colors.white_2,
+    title: colors.dark_text_primary,
+    subTitle: colors.dark_text_secondary,
     hover:{
-      title: colors.white_1,
-      subTitle: colors.white_2,
+      title: colors.dark_text_primary,
+      subTitle: colors.dark_text_secondary,
     },
     focus:{
-      title: colors.white_1,
-      subTitle: colors.white_2,
+      title: colors.dark_text_primary,
+      subTitle: colors.dark_text_secondary,
     }
   },
 
   texts: {
-    body:colors.white_2,
-    side:colors.gray_2,
-    quote:colors.gray_2,
-    link:colors.blue_1,
+    body: colors.dark_text_secondary,
+    side: colors.dark_text_tertiary,
+    quote: colors.dark_text_tertiary,
+    link: colors.dark_accent_primary,
     hover :{
-      body:colors.white_2,
-      side:colors.gray_2,
-      quote:colors.gray_2,
-      link:colors.blue_1,
+      body: colors.dark_text_secondary,
+      side: colors.dark_text_tertiary,
+      quote: colors.dark_text_tertiary,
+      link: colors.dark_accent_hover,
     },
     focus:{
-      body:colors.white_2,
-      side:colors.white_1,
-      quote:colors.gray_2,
-      link:colors.blue_1,
+      body: colors.dark_text_secondary,
+      side: colors.dark_text_primary,
+      quote: colors.dark_text_tertiary,
+      link: colors.dark_accent_hover,
     }
-    // text1: colors.white_1,
-    // text2: colors.gray_1,
-    // text3: colors.gray_3,
-    // text4: colors.white_2,
-    // text5: colors.black_3,
-    // text6: colors.orange_1,
-    // text7: colors.gray_2,
-    // text8: colors.orange_2,
-    // text9: colors.blue_1,
-    // text10: colors.red_1,
-    // text11: colors.gray_4,
   },
 
-  sidecolors: {
-    // sidecolor1: colors.gray_1,
-    // sidecolor2: colors.gray_2,
-    // sidecolor3: colors.gray_3,
-    // sidecolor4: colors.orange_2,
-  },
+  sidecolors: {},
 
+  text_hover: {},
 
+  background_hover: {},
 
-  text_hover: {
-    // hover1: colors.orange_1,
-    // hover2: colors.white_2,
-    // hover3: colors.gray_2,
-  },
+  color_hover: {},
 
-  background_hover: {
-    // hover1: colors.black_3,
-    // hover2: colors.gray_2,
-    // hover3: colors.white_2,
-    // hover4: colors.black_1,
-  },
-
-  color_hover: {
-    // hover1: colors.white_2,
-    // hover2: colors.gray_2,
-  },
-
-  boxshadow_hover: {
-    // hover1: boxshadows.bx_shadow_dark7,
-    // hover2: boxshadows.bx_shadow_dark5,
-    // hover3: boxshadows.bx_shadow_dark6,
-  },
+  boxshadow_hover: {},
 
   font:{
     sizes:{
@@ -301,6 +218,7 @@ export const darkTheme = {
       side: '1rem',
       quote: '1rem',
       link: '1.1rem',
+      body: '1.1rem',
       hover: {
         body: '1rem',
         title: '1rem',
@@ -317,9 +235,11 @@ export const darkTheme = {
         quote: '1rem',
         link: '1.1rem',
       }
+    },
+    families: {
+      body: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      heading: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     }
-
-
   }
 }
 

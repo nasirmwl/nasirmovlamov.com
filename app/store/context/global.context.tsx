@@ -1,14 +1,15 @@
+import { ReactNode, createContext, useLayoutEffect, useState } from 'react';
 import { darkTheme, lightTheme } from '@styled-components/styled-theme/styled-theme';
-import { createContext, ReactFragment, useLayoutEffect, useState } from 'react';
 
 import { GlobalStyle } from '@styled-components/styled-global';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import i18n from '../../data/translation/i18n';
+
 type CustomGlobalContextType = {
   isMenuOpen: boolean;
   darkMode: 'light' | 'dark' | null;
   toggleMenu: () => void;
-  toggleTheme: (theme: 'light' | 'dark') => void;
+  toggleTheme: () => void;
   lang: 'az' | 'en' | null;
   toggleLang: (lang: 'az' | 'en') => void;
 };
@@ -22,11 +23,11 @@ export const GlobalContext = createContext<CustomGlobalContextType>({
 });
 
 type Props = {
-  children: ReactFragment;
+  children: ReactNode;
 };
 
 export const GlobalProvider = ({ children }: Props) => {
-  const [darkMode, setDarkMode] = useState<'light' | 'dark' | null>(null);
+  const [darkMode, setDarkMode] = useState<'light' | 'dark' | null>('dark');
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [lang, setLang] = useState<'az' | 'en' | null>('az');
 
@@ -104,7 +105,7 @@ export const GlobalProvider = ({ children }: Props) => {
     >
       <StyledThemeProvider theme={darkMode === 'light' ? lightTheme : darkTheme}>
         <GlobalStyle />
-        <div className="min-h-screen mx-auto max-w-2xl ">{children}</div>
+        {children}
       </StyledThemeProvider>
     </GlobalContext.Provider>
   );

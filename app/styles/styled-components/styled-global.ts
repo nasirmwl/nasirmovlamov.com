@@ -11,10 +11,18 @@ type Props = {
 export const GlobalStyle = createGlobalStyle<Props>`
   html{
     font-size: 18px;
+    background: ${({ theme }) => theme.colors.background};
   }
 
   body {
     font-size: 1rem;
+    background: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
+    transition: background 0.2s ease-in, color 0.2s ease-in;
+    font-family: ${({ theme }) => theme.font?.families?.body || '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'};
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   a {
@@ -25,10 +33,6 @@ export const GlobalStyle = createGlobalStyle<Props>`
 
   p, h1, h2, h3, h4, h5, h6 {
     width: 100%;
-  }
-
-  * {
-    color:${({theme}) => theme.colors.white_2}
   }
 
 `
