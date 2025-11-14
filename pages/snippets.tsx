@@ -166,11 +166,11 @@ interface Note {
 const notes: Note[] = [
   {
     id: '1',
-    title: 'The Power of Compound Growth',
-    content: 'Small, consistent improvements compound over time. Getting 1% better each day leads to being 37x better in a year. Focus on sustainable daily progress rather than dramatic overnight changes.',
-    quote: 'Success is the sum of small efforts repeated day in and day out.',
-    tag: 'Growth',
-    date: '2024-11-10'
+    title: 'The 4 Things You Need To Be An Expert',
+    content: 'Based on Veritasium\'s video: 1. Valid Environment - Your field must have learnable patterns, not inherent randomness. Politics is unpredictable; physics follows laws. 2. Repetitions - You need multiple attempts to practice. Musical instruments, coding, public speaking allow this; winning elections doesn\'t. 3. Timely Feedback - Get quick feedback on your attempts. Solving equations gives immediate verification. Without it, you can\'t know if you\'re on the right path. 4. Deliberate Practice - Don\'t just repeat in comfort. Challenge yourself, change environments, push boundaries. Growth happens outside your comfort zone.',
+    quote: 'Expertise isn\'t just about practice—it\'s about practicing in the right environment with the right feedback.',
+    tag: 'Learning',
+    date: '2024-11-14'
   },
   {
     id: '2',
