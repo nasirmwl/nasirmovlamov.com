@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { getAllPostSlugs, getPostBySlug, BlogPost } from '../../../lib/mdx';
 import MDXComponents from '../../../app/components/modules/blog/MDXComponents';
 import { LAYOUT_CONSTANTS } from '@styles/layout-constants';
+import SEO from '../../../app/components/shared/SEO';
 
 const Container = styled.div`
   max-width: 800px;
@@ -251,36 +252,48 @@ interface BlogPostPageProps {
 }
 
 const BlogPostPage: NextPage<BlogPostPageProps> = ({ post, mdxSource }) => {
+  const postUrl = `https://www.nasirmovlamov.com/blog/${post.slug}`;
+  const postTitle = `${post.title} | Nasir Movlamov`;
+  
   return (
-    <Container>
-      <Header>
-        <Title>{post.title}</Title>
-        {post.description && <Description>{post.description}</Description>}
-        <Meta>
-          {post.date && (
-            <MetaItem>
-              {new Date(post.date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}
-            </MetaItem>
+    <>
+      <SEO
+        title={postTitle}
+        description={post.description || 'Read this blog post by Nasir Movlamov'}
+        url={postUrl}
+        type="article"
+        keywords={post.tags?.join(', ')}
+      />
+      <Container>
+        <Header>
+          <Title>{post.title}</Title>
+          {post.description && <Description>{post.description}</Description>}
+          <Meta>
+            {post.date && (
+              <MetaItem>
+                {new Date(post.date).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </MetaItem>
+            )}
+            {post.readingTime && <MetaItem>• {post.readingTime}</MetaItem>}
+            {post.author && <MetaItem>• {post.author}</MetaItem>}
+          </Meta>
+          {post.tags && post.tags.length > 0 && (
+            <Tags>
+              {post.tags.map((tag) => (
+                <Tag key={tag}>{tag}</Tag>
+              ))}
+            </Tags>
           )}
-          {post.readingTime && <MetaItem>• {post.readingTime}</MetaItem>}
-          {post.author && <MetaItem>• {post.author}</MetaItem>}
-        </Meta>
-        {post.tags && post.tags.length > 0 && (
-          <Tags>
-            {post.tags.map((tag) => (
-              <Tag key={tag}>{tag}</Tag>
-            ))}
-          </Tags>
-        )}
-      </Header>
-      <Content>
-        <MDXRemote {...mdxSource} components={MDXComponents} />
-      </Content>
-    </Container>
+        </Header>
+        <Content>
+          <MDXRemote {...mdxSource} components={MDXComponents} />
+        </Content>
+      </Container>
+    </>
   );
 };
 
