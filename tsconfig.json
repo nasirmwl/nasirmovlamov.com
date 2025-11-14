@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -16,31 +20,74 @@
     "incremental": true,
     "baseUrl": "./",
     "paths": {
-      "svg/*": ["src/svg/*"],
-      "@components/*": ["app/components/*"],
-      "@ui/*": ["app/components/ui/*"],
-      "@context/*": ["./app/contexts/*"],
-      "@utils/*": ["./app/utils/*"],
-      "@hooks/*": ["./app/hooks/*"],
-      "@redux/*": ["./app/store/redux/*"],
-      "@store/*": ["./app/store/*"],
-      "@helpers/*": ["./app/helpers/*"],
-      "@css/*": ["./app/styles/css/*"],
-      "@fonts/*": ["./app/fonts/*"],
-      "@scss/*": ["./app/styles/scss/*"],
-      "@styles/*": ["./app/styles/*"],
-      "@styled-components/*": ["./app/styles/styled-components/*"],
-      "@routes/*": ["./app/routes/*"],
-      "@data/*": ["./app/data/*"],
-      "@media/*": ["./app/styles/media/*"]
-    }
+      "svg/*": [
+        "src/svg/*"
+      ],
+      "@components/*": [
+        "app/components/*"
+      ],
+      "@ui/*": [
+        "app/components/ui/*"
+      ],
+      "@context/*": [
+        "./app/contexts/*"
+      ],
+      "@utils/*": [
+        "./app/utils/*"
+      ],
+      "@hooks/*": [
+        "./app/hooks/*"
+      ],
+      "@redux/*": [
+        "./app/store/redux/*"
+      ],
+      "@store/*": [
+        "./app/store/*"
+      ],
+      "@helpers/*": [
+        "./app/helpers/*"
+      ],
+      "@css/*": [
+        "./app/styles/css/*"
+      ],
+      "@fonts/*": [
+        "./app/fonts/*"
+      ],
+      "@scss/*": [
+        "./app/styles/scss/*"
+      ],
+      "@styles/*": [
+        "./app/styles/*"
+      ],
+      "@styled-components/*": [
+        "./app/styles/styled-components/*"
+      ],
+      "@routes/*": [
+        "./app/routes/*"
+      ],
+      "@data/*": [
+        "./app/data/*"
+      ],
+      "@media/*": [
+        "./app/styles/media/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "types/**/*.d.ts",
     "app/styles/media/icons/svg-menu.jsx",
-    "app/components/shared/LanguageChanger/elements/lang.element.tsx"
+    "app/components/shared/LanguageChanger/elements/lang.element.tsx",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

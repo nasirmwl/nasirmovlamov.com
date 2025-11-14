@@ -89,33 +89,23 @@ const FooterModule = (props: Props) => {
         ) : (
           <div className="mb-4">
             {t('currentlyNotListening')},{' '}
-            <Link href="/spotify" passHref>
-              <span className="text-base cursor-pointer">{t('goLatests')}</span>
-            </Link>
+            <Link href="/spotify" className="text-base cursor-pointer">{t('goLatests')}</Link>
           </div>
         )}
       </div>
       <div className="flex flex-wrap gap-x-36 ">
         <div>
-          <Link href="/spotify" passHref>
-            <StyledFooterLink>
-              <div className="flex gap-2">
-                <SVG_spotify /> {t('recentlyPlayed')}
-              </div>
-            </StyledFooterLink>
-          </Link>
+          <StyledFooterLink as={Link} href="/spotify">
+            <div className="flex gap-2">
+              <SVG_spotify /> {t('recentlyPlayed')}
+            </div>
+          </StyledFooterLink>
 
-          <Link href="/" passHref>
-            <StyledFooterLink>{t('home')}</StyledFooterLink>
-          </Link>
+          <StyledFooterLink as={Link} href="/">{t('home')}</StyledFooterLink>
 
-          <Link href="about" passHref>
-            <StyledFooterLink>{t('about')}</StyledFooterLink>
-          </Link>
+          <StyledFooterLink as={Link} href="/about">{t('about')}</StyledFooterLink>
 
-          <Link href="/blog" passHref>
-            <StyledFooterLink>{t('blog')}</StyledFooterLink>
-          </Link>
+          <StyledFooterLink as={Link} href="/blog">{t('blog')}</StyledFooterLink>
         </div>
 
         <div>

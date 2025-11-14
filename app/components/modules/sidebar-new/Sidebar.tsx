@@ -594,12 +594,10 @@ export const Sidebar: React.FC = () => {
           ×
         </CloseButton>
         <TopBar>
-          <Link href="/">
-            <SiteTitleLink onClick={closeSidebar}>
-              <SiteLogo>💾</SiteLogo>
-              <SiteName>nasir.dev</SiteName>
-            </SiteTitleLink>
-          </Link>
+          <SiteTitleLink as={Link} href="/" onClick={closeSidebar}>
+            <SiteLogo>💾</SiteLogo>
+            <SiteName>nasir.dev</SiteName>
+          </SiteTitleLink>
           <TopButtons>
             <IconButton
               onClick={toggleTheme}
@@ -645,37 +643,29 @@ export const Sidebar: React.FC = () => {
       <Section>
         <SectionTitle>About Me</SectionTitle>
         <BioText>
-          I&apos;m <Link href="/about"><a onClick={closeSidebar}>Nasir</a></Link>, software engineer and open-source creator. This
+          I&apos;m <Link href="/about" onClick={closeSidebar}>Nasir</Link>, software engineer and open-source creator. This
           is my digital garden. 🌱
         </BioText>
       </Section>
 
       <Section>
         <NavList>
-          <Link href="/blog">
-            <NavItem $active={currentPath.startsWith('/blog')} onClick={closeSidebar}>
-              <NavIcon>📄</NavIcon>
-              Blog
-            </NavItem>
-          </Link>
-          <Link href="/snippets">
-            <NavItem $active={currentPath === '/snippets'} onClick={closeSidebar}>
-              <NavIcon>📝</NavIcon>
-              Notes
-            </NavItem>
-          </Link>
-          <Link href="/about">
-            <NavItem $active={currentPath === '/about'} onClick={closeSidebar}>
-              <NavIcon>💾</NavIcon>
-              About Me
-            </NavItem>
-          </Link>
-          <Link href="/recently-played">
-            <NavItem $active={currentPath === '/recently-played'} onClick={closeSidebar}>
-              <NavIcon>🎵</NavIcon>
-              Recently Played
-            </NavItem>
-          </Link>
+          <NavItem as={Link} href="/blog" $active={currentPath.startsWith('/blog')} onClick={closeSidebar}>
+            <NavIcon>📄</NavIcon>
+            Blog
+          </NavItem>
+          <NavItem as={Link} href="/snippets" $active={currentPath === '/snippets'} onClick={closeSidebar}>
+            <NavIcon>📝</NavIcon>
+            Notes
+          </NavItem>
+          <NavItem as={Link} href="/about" $active={currentPath === '/about'} onClick={closeSidebar}>
+            <NavIcon>💾</NavIcon>
+            About Me
+          </NavItem>
+          <NavItem as={Link} href="/recently-played" $active={currentPath === '/recently-played'} onClick={closeSidebar}>
+            <NavIcon>🎵</NavIcon>
+            Recently Played
+          </NavItem>
         </NavList>
       </Section>
 

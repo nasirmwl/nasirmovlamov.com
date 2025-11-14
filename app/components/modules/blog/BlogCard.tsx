@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { BlogPost } from '../../../../lib/mdx';
 
 const Card = styled.div`
-  background: ${(props) => props.theme.colors.cardBackground || '#ffffff'};
+  background: ${(props) => props.theme.colors.backgroundSecondary};
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -72,8 +72,7 @@ interface BlogCardProps {
 
 export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
   return (
-    <Link href={`/blog/${post.slug}`} passHref>
-      <Card>
+      <Card as={Link} href={`/blog/${post.slug}`}>
         <Title>{post.title}</Title>
         <Description>{post.description}</Description>
         <Meta>
@@ -88,7 +87,6 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
           </Tags>
         )}
       </Card>
-    </Link>
   );
 };
 

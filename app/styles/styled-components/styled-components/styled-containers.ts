@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledContainer = styled.div<any>`
   min-width: 1080px;
   flex-wrap: wrap;
-  display: ${({ flex, grid }) => (flex ? ('flex' || grid ? 'grid' : 'initial') : 'initial')};
+  display: ${({ flex, grid }) => (flex ? 'flex' : (grid ? 'grid' : 'initial'))};
   margin-top: ${({ marginTop }) => (marginTop ? marginTop : '0')};
   margin-bottom: ${({ marginBottom }) => (marginBottom ? marginBottom : '0')};
 `;

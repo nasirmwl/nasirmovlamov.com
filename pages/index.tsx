@@ -243,11 +243,9 @@ const Home: NextPage<HomeProps> = ({ recentPosts }) => {
                   day: 'numeric',
                 })}
               </PostDate>
-              <Link href={`/blog/${post.slug}`} passHref>
-                <PostLink>
-                  <PostTitle>{post.title}</PostTitle>
-                </PostLink>
-              </Link>
+              <PostLink as={Link} href={`/blog/${post.slug}`}>
+                <PostTitle>{post.title}</PostTitle>
+              </PostLink>
             </PostItem>
           ))}
         </PostsList>

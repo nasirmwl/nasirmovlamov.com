@@ -51,10 +51,8 @@ export const HeaderModule: React.FC = (props: Props) => {
         >
           <ul className="flex flex-col p-4 mt-4   rounded-lg bg-gray-200 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-[#101110] md:dark:bg-gray-900 dark:shadow-sm dark:shadow-gray-500 sm:hidden">
             <li>
-              <Link href="/" passHref>
-                <span className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0  md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
-                  Home
-                </span>
+              <Link href="/" className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0  md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                Home
               </Link>
             </li>
             {/* <li>
@@ -65,57 +63,49 @@ export const HeaderModule: React.FC = (props: Props) => {
               </Link>
             </li> */}
             <li>
-              <Link href="/about" passHref>
-                <span className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0  md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
-                  About
-                </span>
+              <Link href="/about" className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0  md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                About
               </Link>
             </li>
             <li>
-              <Link href="/blog" passHref>
-                <span className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0  md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
-                  Blog
-                </span>
+              <Link href="/blog" className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0  md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                Blog
               </Link>
             </li>
           </ul>
         </div>
         <div className=" hidden sm:flex">
-          <Link href="/" passHref>
-            <StyledHeaderLinkFirst
-              paddingLeft={'0px'}
-              isDarkMode={darkMode === 'dark' ? true : false}
-              bold={isRoute.home}
-              className="pl-0"
-            >
-              {t('home')}
-            </StyledHeaderLinkFirst>
-          </Link>
+          <StyledHeaderLinkFirst
+            as={Link}
+            href="/"
+            paddingLeft={'0px'}
+            isDarkMode={darkMode === 'dark' ? true : false}
+            bold={isRoute.home}
+            className="pl-0"
+          >
+            {t('home')}
+          </StyledHeaderLinkFirst>
 
           {/* <Link href="/chatgpt" passHref>
             <StyledHeaderLink isDarkMode={darkMode === 'dark' ? true : false} bold={isRoute.gpt}>
               ChatGPT
             </StyledHeaderLink>
           </Link> */}
-          <Link href="/about" passHref>
-            <StyledHeaderLink isDarkMode={darkMode === 'dark' ? true : false} bold={isRoute.about}>
-              {t('about')}
-            </StyledHeaderLink>
-          </Link>
-          <Link href="/dashboard" passHref>
-            <StyledHeaderLink
-              isDarkMode={darkMode === 'dark' ? true : false}
-              bold={isRoute.dashboard}
-            >
-              {t('dashboard')}
-            </StyledHeaderLink>
-          </Link>
+          <StyledHeaderLink as={Link} href="/about" isDarkMode={darkMode === 'dark' ? true : false} bold={isRoute.about}>
+            {t('about')}
+          </StyledHeaderLink>
+          <StyledHeaderLink
+            as={Link}
+            href="/dashboard"
+            isDarkMode={darkMode === 'dark' ? true : false}
+            bold={isRoute.dashboard}
+          >
+            {t('dashboard')}
+          </StyledHeaderLink>
 
-          <Link href="/blog" passHref>
-            <StyledHeaderLink isDarkMode={darkMode === 'dark' ? true : false} bold={isRoute.blog}>
-              {t('blog')}
-            </StyledHeaderLink>
-          </Link>
+          <StyledHeaderLink as={Link} href="/blog" isDarkMode={darkMode === 'dark' ? true : false} bold={isRoute.blog}>
+            {t('blog')}
+          </StyledHeaderLink>
         </div>
         <div className="flex gap-2">
           <ThemeChanger />

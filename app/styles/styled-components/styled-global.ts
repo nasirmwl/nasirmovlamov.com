@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { ThemeType } from './styled-theme/styled-theme';
 
 type Props = {
-  theme: ThemeType
+  theme?: ThemeType
 }
 
 

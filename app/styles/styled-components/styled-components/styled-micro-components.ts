@@ -70,7 +70,7 @@ export const StyledHr = styled.hr<any>`
   margin: 0;
   margin-bottom: 20px;
   width: ${(props) => props.width || '100%'};
-  max-width: ${(props) => '100%' || '100%'};
+  max-width: ${(props) => props.maxWidth || '100%'};
   height: ${(props) => props.height || '1px'};
   background-color: ${({ theme }) => theme.colors.gray_1};
 `;
