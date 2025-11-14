@@ -1,4 +1,4 @@
-White Minimalist Profile LinkedIn Banner.pngconst Test = () => {
+const Test = () => {
   return (
     <div>
       <h1>Test</h1>
