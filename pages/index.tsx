@@ -3,6 +3,7 @@ import type { GetStaticProps, NextPage } from 'next';
 
 import { LAYOUT_CONSTANTS } from '@styles/layout-constants';
 import Link from 'next/link';
+import SEO from '../app/components/shared/SEO';
 import styled from 'styled-components';
 
 const HomeContainer = styled.div`
@@ -194,7 +195,9 @@ interface HomeProps {
 
 const Home: NextPage<HomeProps> = ({ recentPosts }) => {
   return (
-    <HomeContainer>
+    <>
+      <SEO />
+      <HomeContainer>
       <Hero>
         <Title>Hey, I&apos;m Nasir!</Title>
         <Description>
@@ -230,6 +233,17 @@ const Home: NextPage<HomeProps> = ({ recentPosts }) => {
             </HighlightDescription>
           </HighlightCard>
         </HighlightsList>
+      </Section>
+
+      <Section>
+        <SectionTitle>✈️ The Aviator - 3D Flight Game</SectionTitle>
+        <HighlightCard style={{ marginTop: '1rem', cursor: 'pointer', background: 'linear-gradient(135deg, #89CFF0 0%, #667eea 100%)' }} onClick={() => window.location.href = '/aviator'}>
+          <HighlightTitle style={{ color: '#ffffff' }}>Fly Through the Skies!</HighlightTitle>
+          <HighlightDescription style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+            A beautiful 3D flight simulator built with Three.js. Control a plane through endless skies with realistic 3D graphics,
+            dynamic lighting, and smooth animations. Move your mouse to fly! ✈️
+          </HighlightDescription>
+        </HighlightCard>
       </Section>
 
       <Section>
@@ -277,6 +291,7 @@ const Home: NextPage<HomeProps> = ({ recentPosts }) => {
         </Description>
       </Section>
     </HomeContainer>
+    </>
   );
 };
 
