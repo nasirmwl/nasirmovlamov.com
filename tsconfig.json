@@ -28,6 +28,7 @@
       "@css/*": ["./app/styles/css/*"],
       "@fonts/*": ["./app/fonts/*"],
       "@scss/*": ["./app/styles/scss/*"],
+      "@styles/*": ["./app/styles/*"],
       "@styled-components/*": ["./app/styles/styled-components/*"],
       "@routes/*": ["./app/routes/*"],
       "@data/*": ["./app/data/*"],

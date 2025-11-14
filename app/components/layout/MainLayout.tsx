@@ -1,6 +1,7 @@
 import React from 'react';
 import { Sidebar } from '@components/modules/sidebar-new/Sidebar';
 import styled from 'styled-components';
+import { LAYOUT_CONSTANTS } from '@styles/layout-constants';
 
 const LayoutContainer = styled.div`
   min-height: 100vh;
@@ -10,23 +11,23 @@ const LayoutContainer = styled.div`
 `;
 
 const MainContent = styled.main`
-  margin-left: 300px;
+  margin-left: ${LAYOUT_CONSTANTS.SIDEBAR_WIDTH}px;
   min-height: 100vh;
   display: flex;
   justify-content: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     margin-left: 0;
   }
 `;
 
 const ContentWrapper = styled.div`
   width: 100%;
-  max-width: 800px;
+  max-width: calc(100vw - ${LAYOUT_CONSTANTS.SIDEBAR_WIDTH}px - 4rem);
   display: flex;
-  padding: 0 1.5rem;
+  padding: 0 0.5rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     padding: 4rem 1rem 1rem 1rem;
     max-width: 100%;
   }

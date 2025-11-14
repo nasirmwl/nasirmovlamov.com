@@ -1,21 +1,23 @@
 import type { NextPage } from 'next';
 import styled from 'styled-components';
 import { useState } from 'react';
+import { LAYOUT_CONSTANTS } from '@styles/layout-constants';
 
 const NotesContainer = styled.div`
   max-width: 800px;
-  padding: 3rem 2rem;
+  padding: 4rem 2rem;
   width: 100%;
+  margin: 0 auto;
   
-  @media (max-width: 768px) {
-    padding: 1.5rem 1rem;
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    padding: 2rem 1.5rem;
   }
 `;
 
 const Header = styled.header`
   margin-bottom: 4rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     margin-bottom: 2rem;
   }
 `;
@@ -28,7 +30,7 @@ const Title = styled.h1`
   line-height: 1.15;
   letter-spacing: -0.03em;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     font-size: 2.75rem;
     margin-bottom: 0.75rem;
   }
@@ -40,7 +42,7 @@ const Subtitle = styled.p`
   line-height: 1.75;
   margin-bottom: 2rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     margin-bottom: 1rem;
   }
 `;
@@ -51,7 +53,7 @@ const FilterContainer = styled.div`
   gap: 0.75rem;
   margin-bottom: 3rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     gap: 0.5rem;
     margin-bottom: 1.5rem;
   }
@@ -79,7 +81,7 @@ const NotesGrid = styled.div`
   display: grid;
   gap: 1.5rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     gap: 1rem;
   }
 `;
@@ -96,7 +98,7 @@ const NoteCard = styled.article`
     transform: translateY(-2px);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     padding: 1.5rem;
   }
 `;
@@ -133,31 +135,18 @@ const NoteContent = styled.div`
   line-height: 1.7;
   color: ${(props) => props.theme.colors.textSecondary};
   margin-bottom: 1rem;
-
-  code {
-    background: ${(props) => props.theme.colors.codeBackground};
-    color: ${(props) => props.theme.colors.codeText};
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.9375rem;
-    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-  }
 `;
 
-const CodeBlock = styled.pre`
-  background: ${(props) => props.theme.colors.codeBackground};
+const Quote = styled.blockquote`
+  background: ${(props) => props.theme.colors.backgroundSecondary};
+  border-left: 4px solid ${(props) => props.theme.colors.primary};
   padding: 1.25rem;
   border-radius: 8px;
-  overflow-x: auto;
   margin: 1rem 0;
-  border: 1px solid ${(props) => props.theme.colors.codeBorder};
-
-  code {
-    color: ${(props) => props.theme.colors.codeText};
-    font-size: 0.9375rem;
-    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-    line-height: 1.6;
-  }
+  font-style: italic;
+  color: ${(props) => props.theme.colors.text};
+  font-size: 1rem;
+  line-height: 1.6;
 `;
 
 const NoteDate = styled.time`
@@ -169,7 +158,7 @@ interface Note {
   id: string;
   title: string;
   content: string;
-  code?: string;
+  quote?: string;
   tag: string;
   date: string;
 }
@@ -177,206 +166,93 @@ interface Note {
 const notes: Note[] = [
   {
     id: '1',
-    title: 'Micro-Frontend Module Federation',
-    content: 'When working with Webpack Module Federation, always version your shared dependencies explicitly. This prevents runtime errors when different micro-frontends use incompatible versions.',
-    code: `// webpack.config.js
-new ModuleFederationPlugin({
-  shared: {
-    react: { singleton: true, requiredVersion: '^18.0.0' },
-    'react-dom': { singleton: true, requiredVersion: '^18.0.0' }
-  }
-})`,
-    tag: 'Micro-frontends',
+    title: 'The Power of Compound Growth',
+    content: 'Small, consistent improvements compound over time. Getting 1% better each day leads to being 37x better in a year. Focus on sustainable daily progress rather than dramatic overnight changes.',
+    quote: 'Success is the sum of small efforts repeated day in and day out.',
+    tag: 'Growth',
     date: '2024-11-10'
   },
   {
     id: '2',
-    title: 'React Testing Library Best Practice',
-    content: 'Test user behavior, not implementation details. Query by accessibility attributes (role, label) rather than test IDs when possible. This ensures your tests remain valuable even when refactoring.',
-    code: `// ✅ Good - Tests user behavior
-const button = screen.getByRole('button', { name: /submit/i });
-
-// ❌ Avoid - Tests implementation details
-const button = container.querySelector('.submit-btn');`,
-    tag: 'Testing',
+    title: 'Deep Work Over Busy Work',
+    content: 'Not all hours are created equal. One hour of focused, uninterrupted deep work can be more valuable than a full day of shallow tasks. Protect your deep work time fiercely.',
+    quote: 'The ability to perform deep work is becoming increasingly rare and therefore increasingly valuable.',
+    tag: 'Productivity',
     date: '2024-11-09'
   },
   {
     id: '3',
-    title: 'CSS-in-JS Performance Optimization',
-    content: 'When using styled-components, avoid creating styled components inside render methods. This causes unnecessary re-creation on every render and impacts performance.',
-    code: `// ❌ Bad - Creates new component every render
-const MyComponent = () => {
-  const StyledDiv = styled.div\`color: red;\`;
-  return <StyledDiv />;
-}
-
-// ✅ Good - Create outside component
-const StyledDiv = styled.div\`color: red;\`;
-const MyComponent = () => <StyledDiv />;`,
-    tag: 'React',
+    title: 'Identity-Based Habits',
+    content: 'Instead of focusing on goals, focus on becoming the type of person who achieves those goals. Don\'t say "I want to run a marathon", say "I am a runner". Identity change precedes behavior change.',
+    quote: 'Every action you take is a vote for the type of person you wish to become.',
+    tag: 'Habits',
     date: '2024-11-08'
   },
   {
     id: '4',
-    title: 'TypeScript Utility Types',
-    content: 'Use Pick and Omit utility types to create derived types. This keeps your types DRY and maintains a single source of truth.',
-    code: `interface User {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-}
-
-// Create a public user type without sensitive data
-type PublicUser = Omit<User, 'password'>;
-
-// Create a type for user creation
-type CreateUser = Pick<User, 'name' | 'email' | 'password'>;`,
-    tag: 'TypeScript',
+    title: 'Learn in Public',
+    content: 'Document your learning journey publicly. Writing about what you learn deepens your understanding, builds your network, and creates a knowledge base for others. Don\'t wait until you\'re an expert.',
+    quote: 'The best way to learn is to teach.',
+    tag: 'Learning',
     date: '2024-11-07'
   },
   {
     id: '5',
-    title: 'React Hook Dependencies',
-    content: 'Always include all dependencies in useEffect and useCallback. Use ESLint exhaustive-deps rule to catch missing dependencies early.',
-    code: `// ❌ Avoid
-useEffect(() => {
-  fetchData(userId);
-}, []); // Missing userId dependency
-
-// ✅ Correct
-useEffect(() => {
-  fetchData(userId);
-}, [userId]);`,
-    tag: 'React',
+    title: 'The Two-Minute Rule',
+    content: 'If a task takes less than two minutes, do it immediately. This prevents small tasks from accumulating and overwhelming you. It also builds momentum for tackling larger tasks.',
+    tag: 'Productivity',
     date: '2024-11-06'
   },
   {
     id: '6',
-    title: 'Git Commit Message Convention',
-    content: 'Follow conventional commits for better changelog generation and semantic versioning. Format: type(scope): subject',
-    code: `feat(auth): add OAuth2 login flow
-fix(api): resolve null pointer in user service
-docs(readme): update installation instructions
-test(user): increase coverage to 85%
-refactor(utils): simplify date formatting logic`,
-    tag: 'Git',
+    title: 'Embrace Discomfort',
+    content: 'Growth happens outside your comfort zone. Deliberately seek situations that challenge you. The discomfort you feel is your brain rewiring itself for new capabilities.',
+    quote: 'A ship in harbor is safe, but that is not what ships are built for.',
+    tag: 'Growth',
     date: '2024-11-05'
   },
   {
     id: '7',
-    title: 'React Performance: useMemo vs useCallback',
-    content: 'useMemo memoizes a computed value, useCallback memoizes a function. Use them to prevent unnecessary re-renders in child components.',
-    code: `// useMemo - for expensive calculations
-const sortedItems = useMemo(() => 
-  items.sort((a, b) => a.price - b.price), 
-  [items]
-);
-
-// useCallback - for function references
-const handleClick = useCallback(() => {
-  setCount(c => c + 1);
-}, []);`,
-    tag: 'React',
+    title: 'Morning Rituals Matter',
+    content: 'How you start your day sets the tone for everything that follows. Create a morning routine that energizes you: exercise, meditation, journaling, or simply enjoying coffee without distractions.',
+    tag: 'Habits',
     date: '2024-11-04'
   },
   {
     id: '8',
-    title: 'API Error Handling Pattern',
-    content: 'Implement a consistent error handling pattern across your application. Create custom error classes for different error types.',
-    code: `class APIError extends Error {
-  constructor(message: string, public statusCode: number) {
-    super(message);
-    this.name = 'APIError';
-  }
-}
-
-async function fetchData(url: string) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new APIError(
-      'Failed to fetch data', 
-      response.status
-    );
-  }
-  return response.json();
-}`,
-    tag: 'JavaScript',
+    title: 'The Power of No',
+    content: 'Every yes to something is a no to something else. Be selective with your commitments. Saying no to good opportunities creates space for great ones.',
+    quote: 'The difference between successful people and very successful people is that very successful people say no to almost everything.',
+    tag: 'Focus',
     date: '2024-11-03'
   },
   {
     id: '9',
-    title: 'Custom React Hook Pattern',
-    content: 'Extract complex logic into custom hooks for reusability and better separation of concerns. Follow the "use" prefix convention.',
-    code: `function useLocalStorage<T>(key: string, initialValue: T) {
-  const [value, setValue] = useState<T>(() => {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : initialValue;
-  });
-
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [key, value]);
-
-  return [value, setValue] as const;
-}`,
-    tag: 'React',
+    title: 'Reflection Time',
+    content: 'Schedule regular time for reflection. Weekly reviews help you course-correct early, celebrate wins, and extract lessons from failures. Progress without reflection is just motion.',
+    tag: 'Productivity',
     date: '2024-11-02'
   },
   {
     id: '10',
-    title: 'Webpack Bundle Analysis',
-    content: 'Regularly analyze your bundle size to identify large dependencies. Use webpack-bundle-analyzer to visualize your bundle composition.',
-    code: `// webpack.config.js
-const BundleAnalyzerPlugin = 
-  require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
-module.exports = {
-  plugins: [
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      openAnalyzer: false
-    })
-  ]
-};`,
-    tag: 'Webpack',
+    title: 'Build a Learning System',
+    content: 'Don\'t just consume content. Create a system for capturing, processing, and applying what you learn. Use tools like note-taking apps, spaced repetition, and teaching others.',
+    tag: 'Learning',
     date: '2024-11-01'
   },
   {
     id: '11',
-    title: 'Accessibility: Semantic HTML',
-    content: 'Use semantic HTML elements for better accessibility and SEO. Screen readers rely on proper semantic structure.',
-    code: `// ❌ Avoid
-<div onClick={handleClick}>Click me</div>
-
-// ✅ Better
-<button onClick={handleClick}>Click me</button>
-
-// ✅ Semantic structure
-<article>
-  <header><h1>Title</h1></header>
-  <section><p>Content</p></section>
-  <footer><time>2024-11-10</time></footer>
-</article>`,
-    tag: 'Accessibility',
+    title: 'Energy Management > Time Management',
+    content: 'Manage your energy, not just your time. Schedule your most important work during your peak energy hours. Protect your energy through sleep, exercise, nutrition, and boundaries.',
+    quote: 'Time is what we want most, but what we use worst.',
+    tag: 'Productivity',
     date: '2024-10-31'
   },
   {
     id: '12',
-    title: 'Environment Variables Security',
-    content: 'Never commit sensitive environment variables. Use NEXT_PUBLIC_ prefix only for client-side variables in Next.js.',
-    code: `// .env (server-side only)
-DATABASE_URL=postgresql://...
-API_SECRET_KEY=secret123
-
-// .env (client-side accessible)
-NEXT_PUBLIC_API_URL=https://api.example.com
-
-// Usage
-const apiUrl = process.env.NEXT_PUBLIC_API_URL; // ✅ Client
-const dbUrl = process.env.DATABASE_URL; // ✅ Server only`,
-    tag: 'Security',
+    title: 'The Power of Questions',
+    content: 'Ask better questions to get better answers. Instead of "Why me?", ask "What can I learn?". Instead of "What if I fail?", ask "What if I succeed?". Questions direct focus.',
+    tag: 'Mindset',
     date: '2024-10-30'
   }
 ];
@@ -395,8 +271,8 @@ const Snippets: NextPage = () => {
       <Header>
         <Title>Notes</Title>
         <Subtitle>
-          Quick tips, code snippets, and lessons learned from building software. 
-          A collection of practical knowledge from my daily work.
+          Lessons on growth, productivity, and living intentionally. 
+          A collection of insights that have shaped my journey.
         </Subtitle>
         
         <FilterContainer>
@@ -427,10 +303,8 @@ const Snippets: NextPage = () => {
               <NoteTag>{note.tag}</NoteTag>
             </NoteHeader>
             <NoteContent>{note.content}</NoteContent>
-            {note.code && (
-              <CodeBlock>
-                <code>{note.code}</code>
-              </CodeBlock>
+            {note.quote && (
+              <Quote>{note.quote}</Quote>
             )}
           </NoteCard>
         ))}

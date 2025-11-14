@@ -1,12 +1,18 @@
+import { useEffect, useState } from 'react';
+
+import { LAYOUT_CONSTANTS } from '@styles/layout-constants';
 import type { NextPage } from 'next';
+import axios from 'axios';
+import { getAccessToken } from '@helpers/api/spotify';
 import styled from 'styled-components';
 
 const AboutContainer = styled.div`
   max-width: 800px;
-  padding: 3rem 2rem;
+  padding: 4rem 2rem;
   width: 100%;
-  
-  @media (max-width: 768px) {
+  margin: 0 auto;
+
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     padding: 2rem 1.5rem;
   }
 `;
@@ -23,7 +29,7 @@ const Title = styled.h1`
   line-height: 1.15;
   letter-spacing: -0.03em;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     font-size: 2.75rem;
   }
 `;
@@ -133,48 +139,129 @@ const LinkItem = styled.a`
   }
 `;
 
+const SpotifyContainer = styled.div`
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: ${(props) => props.theme.colors.gray_1};
+  border-radius: 8px;
+  border: 1px solid ${(props) => props.theme.colors.borderLight};
+`;
+
+const SpotifyStatus = styled.div`
+  font-size: 0.875rem;
+  color: ${(props) => props.theme.colors.textMuted};
+  margin-bottom: 0.75rem;
+`;
+
+const SpotifyContent = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+const SpotifyImage = styled.img`
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+`;
+
+const SpotifyInfo = styled.div`
+  flex: 1;
+  min-width: 0;
+`;
+
+const SpotifyTrack = styled.div`
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: ${(props) => props.theme.colors.text};
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const SpotifyArtist = styled.div`
+  font-size: 0.9375rem;
+  color: ${(props) => props.theme.colors.textSecondary};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 const About: NextPage = () => {
+  const [loading, setLoading] = useState<'idle' | 'pending' | 'error'>('pending');
+  const [spotifyData, setSpotifyData] = useState<any>(null);
+
+  const getSpotifyData = async () => {
+    try {
+      setLoading('pending');
+      const {
+        data: { access_token: token },
+      } = await getAccessToken();
+      const request = await axios.get('https://api.spotify.com/v1/me/player/currently-playing', {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      });
+      setSpotifyData(request.data);
+      setLoading('idle');
+    } catch (error) {
+      console.log(error);
+      setSpotifyData(null);
+      setLoading('idle');
+    }
+  };
+
+  useEffect(() => {
+    getSpotifyData();
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(getSpotifyData, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <AboutContainer>
       <Header>
         <Title>About Me</Title>
         <Paragraph>
-          Hi, I&apos;m Nasir Movlamov, a Lead Software Engineer at ABB with over 4 years of professional experience 
-          in building modern web applications. I hold a Master&apos;s degree in Artificial Intelligence and a 
+          Hi, I&apos;m Nasir Movlamov, a Lead Software Engineer at ABB with over 4 years of professional experience
+          in building modern web applications. I hold a Master&apos;s degree in Artificial Intelligence and a
           Bachelor&apos;s degree in Computer Engineering.
         </Paragraph>
         <Paragraph>
-          I specialize in micro-frontend architectures, React ecosystems, and creating scalable, maintainable 
+          I specialize in micro-frontend architectures, React ecosystems, and creating scalable, maintainable
           software solutions. I&apos;m passionate about testing, code quality, and mentoring junior engineers.
         </Paragraph>
       </Header>
 
       <Section>
         <SectionTitle>Experience</SectionTitle>
-        
+
         <ExperienceItem>
           <JobTitle>Lead Software Engineer</JobTitle>
           <Company>ABB</Company>
-          <Duration>Oct 2023 - Present · 2 yrs 2 mos · Baku, Azerbaijan (Hybrid)</Duration>
+          <Duration>Oct 2022 - Present · 3 yrs 2 mos · Baku, Azerbaijan (Hybrid)</Duration>
           <Description>
-            Currently part of the Mortgage Tribe, developing software to automate mortgage processes. 
+            Currently part of the Mortgage Tribe, developing software to automate mortgage processes.
+            Previously worked in the Digital Innovations Unit, focusing on internal software solutions
+            and developing micro-frontend architecture supporting various banking products.
+          </Description>
+          <Description>
             Key achievements include:
           </Description>
           <Description>
             • Developed and maintained micro-frontend architecture for mortgage workflows<br/>
-            • Increased test coverage from 10% to 80%, significantly enhancing code reliability<br/>
             • Wrote and maintained internal documentation for the frontend chapter<br/>
             • Mentored junior engineers on best practices and architecture patterns
-          </Description>
-        </ExperienceItem>
-
-        <ExperienceItem>
-          <JobTitle>Software Engineer</JobTitle>
-          <Company>ABB</Company>
-          <Duration>Oct 2022 - Oct 2023 · 1 yr 1 mo · Baku, Azerbaijan</Duration>
-          <Description>
-            Worked in the Digital Innovations Unit, focusing on internal software solutions. 
-            Developed and maintained micro-frontend architecture supporting various banking products.
           </Description>
           <SkillsList>
             <SkillTag>Webpack</SkillTag>
@@ -188,7 +275,7 @@ const About: NextPage = () => {
           <Company>A2Z Technologies</Company>
           <Duration>Apr 2022 - Oct 2022 · 7 mos · Baku, Azerbaijan</Duration>
           <Description>
-            Worked in the ICT Department&apos;s Product Service Development Unit, creating software for 
+            Worked in the ICT Department&apos;s Product Service Development Unit, creating software for
             internal usage and customer-facing services.
           </Description>
           <SkillsList>
@@ -203,8 +290,8 @@ const About: NextPage = () => {
           <Company>Code Academy</Company>
           <Duration>Jan 2022 - Jun 2022 · 6 mos · Baku, Azerbaijan</Duration>
           <Description>
-            Taught at Azerbaijan&apos;s most prestigious coding bootcamp. Participated in curriculum development, 
-            teaching, and programming competitions. Main responsibilities included teaching &quot;Data Structures 
+            Taught at Azerbaijan&apos;s most prestigious coding bootcamp. Participated in curriculum development,
+            teaching, and programming competitions. Main responsibilities included teaching &quot;Data Structures
             and Algorithms&quot; and &quot;Introduction to Programming with Javascript, HTML, CSS.&quot;
           </Description>
           <SkillsList>
@@ -220,7 +307,7 @@ const About: NextPage = () => {
           <Company>Abyss</Company>
           <Duration>Aug 2021 - Feb 2022 · 7 mos · Azerbaijan</Duration>
           <Description>
-            In this startup environment, handled multiple roles including software requirements analysis, 
+            In this startup environment, handled multiple roles including software requirements analysis,
             code review, software architecture, deployment, security validation, and software development.
           </Description>
           <SkillsList>
@@ -235,7 +322,7 @@ const About: NextPage = () => {
           <Company>JedAi | Digital Marketing Agency</Company>
           <Duration>Oct 2020 - Sep 2021 · 1 yr · Baku, Azerbaijan</Duration>
           <Description>
-            Designed efficient and scalable APIs as well as sophisticated user interfaces for all 
+            Designed efficient and scalable APIs as well as sophisticated user interfaces for all
             business and product websites.
           </Description>
           <SkillsList>
@@ -248,7 +335,7 @@ const About: NextPage = () => {
 
       <Section>
         <SectionTitle>Education</SectionTitle>
-        
+
         <ExperienceItem>
           <JobTitle>Master&apos;s Degree in Artificial Intelligence</JobTitle>
           <Company>Azerbaijan State Oil and Industry University</Company>
@@ -263,10 +350,41 @@ const About: NextPage = () => {
           <Company>Azerbaijan State Oil and Industry University</Company>
           <Duration>Sep 2018 - Jun 2022 · Grade: 88/100</Duration>
           <Description>
-            Coursework: Data Structures & Algorithms, Object-Oriented Programming, Computer Architecture, 
+            Coursework: Data Structures & Algorithms, Object-Oriented Programming, Computer Architecture,
             Design Patterns, Computer Networks, Operating Systems, Unix Tools and Scripting
           </Description>
         </ExperienceItem>
+      </Section>
+
+      <Section>
+        <SectionTitle>Currently Listening 🎵</SectionTitle>
+        {loading === 'pending' ? (
+          <SpotifyContainer>
+            <SpotifyStatus>Loading...</SpotifyStatus>
+          </SpotifyContainer>
+        ) : spotifyData && spotifyData.is_playing ? (
+          <SpotifyContainer>
+            <SpotifyStatus>🎧 Now Playing on Spotify</SpotifyStatus>
+            <SpotifyContent
+              href={spotifyData.item.external_urls.spotify}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <SpotifyImage
+                src={spotifyData.item.album.images[0].url}
+                alt={`${spotifyData.item.name} album cover`}
+              />
+              <SpotifyInfo>
+                <SpotifyTrack>{spotifyData.item.name}</SpotifyTrack>
+                <SpotifyArtist>{spotifyData.item.artists[0].name}</SpotifyArtist>
+              </SpotifyInfo>
+            </SpotifyContent>
+          </SpotifyContainer>
+        ) : (
+          <SpotifyContainer>
+            <SpotifyStatus>Not currently listening to anything</SpotifyStatus>
+          </SpotifyContainer>
+        )}
       </Section>
 
       <Section>

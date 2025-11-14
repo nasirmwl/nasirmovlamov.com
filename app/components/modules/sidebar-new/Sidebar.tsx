@@ -1,12 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import { GlobalContext } from '@store/context/global.context';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import { LAYOUT_CONSTANTS } from '@styles/layout-constants';
 
 const SidebarContainer = styled.aside<{ $isOpen: boolean }>`
-  width: 300px;
+  width: ${LAYOUT_CONSTANTS.SIDEBAR_WIDTH}px;
   min-height: 100vh;
   background: ${(props) =>
     props.theme.backgrounds?.sidebar || props.theme.colors.backgroundSecondary};
@@ -21,7 +22,7 @@ const SidebarContainer = styled.aside<{ $isOpen: boolean }>`
   z-index: 100;
   transition: transform 0.3s ease-in-out;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     transform: ${(props) => (props.$isOpen ? 'translateX(0)' : 'translateX(-100%)')};
     box-shadow: ${(props) => (props.$isOpen ? '2px 0 8px rgba(0, 0, 0, 0.15)' : 'none')};
   }
@@ -35,7 +36,7 @@ const TopBar = styled.div`
   padding-bottom: 1.5rem;
   border-bottom: 1px solid ${(props) => props.theme.colors.border};
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
   }
@@ -68,7 +69,7 @@ const SiteLogo = styled.div`
     transform: scale(1.05);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     width: 40px;
     height: 40px;
     font-size: 1.25rem;
@@ -236,6 +237,209 @@ const ConnectedIcon = styled.span`
   line-height: 1;
 `;
 
+const MusicSection = styled.div`
+  margin-bottom: 2rem;
+
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    margin-bottom: 1.5rem;
+  }
+`;
+
+const MusicTitle = styled.h3`
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: ${(props) => props.theme.colors.text};
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+`;
+
+const NowPlayingCard = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem;
+  background: ${(props) => props.theme.colors.backgroundSecondary};
+  border: 1px solid ${(props) => props.theme.colors.border};
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    border-color: ${(props) => props.theme.colors.primary};
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    padding: 0.75rem;
+    gap: 0.625rem;
+  }
+`;
+
+const AlbumArt = styled.img`
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  flex-shrink: 0;
+
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    width: 40px;
+    height: 40px;
+  }
+`;
+
+const TrackInfo = styled.div`
+  flex: 1;
+  min-width: 0;
+`;
+
+const TrackName = styled.div`
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: ${(props) => props.theme.colors.text};
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    font-size: 0.875rem;
+  }
+`;
+
+const ArtistName = styled.div`
+  font-size: 0.8125rem;
+  color: ${(props) => props.theme.colors.textMuted};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    font-size: 0.75rem;
+  }
+`;
+
+const StatusBadge = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  color: ${(props) => props.theme.colors.textMuted};
+  margin-bottom: 0.75rem;
+`;
+
+const PulsingDot = styled.span`
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #1DB954;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+`;
+
+const NotPlaying = styled.div`
+  padding: 1rem;
+  background: ${(props) => props.theme.colors.backgroundSecondary};
+  border: 1px solid ${(props) => props.theme.colors.border};
+  border-radius: 8px;
+  text-align: center;
+  color: ${(props) => props.theme.colors.textMuted};
+  font-size: 0.875rem;
+
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    padding: 0.875rem;
+    font-size: 0.8125rem;
+  }
+`;
+
+const RecentlyPlayedList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+`;
+
+const RecentTrackCard = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem;
+  background: ${(props) => props.theme.colors.backgroundSecondary};
+  border: 1px solid ${(props) => props.theme.colors.border};
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    border-color: ${(props) => props.theme.colors.borderLight};
+    transform: translateX(2px);
+  }
+
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    padding: 0.5rem;
+  }
+`;
+
+const SmallAlbumArt = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  flex-shrink: 0;
+
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    width: 36px;
+    height: 36px;
+  }
+`;
+
+const RecentTrackInfo = styled.div`
+  flex: 1;
+  min-width: 0;
+`;
+
+const RecentTrackName = styled.div`
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: ${(props) => props.theme.colors.text};
+  margin-bottom: 0.125rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    font-size: 0.8125rem;
+  }
+`;
+
+const RecentArtistName = styled.div`
+  font-size: 0.75rem;
+  color: ${(props) => props.theme.colors.textMuted};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    font-size: 0.6875rem;
+  }
+`;
+
 const MobileMenuButton = styled.button<{ $isOpen: boolean }>`
   display: none;
   position: fixed;
@@ -310,11 +514,52 @@ const CloseButton = styled.button`
   }
 `;
 
+interface NowPlayingData {
+  isPlaying: boolean;
+  title: string;
+  artist: string;
+  album: string;
+  albumImageUrl: string;
+  songUrl: string;
+}
+
+interface RecentTrack {
+  title: string;
+  artist: string;
+  album: string;
+  albumImageUrl: string;
+  songUrl: string;
+  playedAt: string;
+}
+
 export const Sidebar: React.FC = () => {
   const router = useRouter();
   const currentPath = router.pathname;
   const { darkMode, toggleTheme } = useContext(GlobalContext);
   const [isOpen, setIsOpen] = useState(false);
+  const [nowPlaying, setNowPlaying] = useState<NowPlayingData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchNowPlaying = async () => {
+      try {
+        const response = await fetch('/api/spotify/now-playing');
+        if (response.ok) {
+          const data = await response.json();
+          setNowPlaying(data);
+        }
+      } catch (error) {
+        console.error('Error fetching now playing:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchNowPlaying();
+    // Refresh every 30 seconds
+    const interval = setInterval(fetchNowPlaying, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -350,7 +595,7 @@ export const Sidebar: React.FC = () => {
         </CloseButton>
         <TopBar>
           <Link href="/">
-            <SiteTitleLink>
+            <SiteTitleLink onClick={closeSidebar}>
               <SiteLogo>💾</SiteLogo>
               <SiteName>nasir.dev</SiteName>
             </SiteTitleLink>
@@ -400,7 +645,7 @@ export const Sidebar: React.FC = () => {
       <Section>
         <SectionTitle>About Me</SectionTitle>
         <BioText>
-          I&apos;m <Link href="/about">Nasir</Link>, software engineer and open-source creator. This
+          I&apos;m <Link href="/about"><a onClick={closeSidebar}>Nasir</a></Link>, software engineer and open-source creator. This
           is my digital garden. 🌱
         </BioText>
       </Section>
@@ -425,8 +670,44 @@ export const Sidebar: React.FC = () => {
               About Me
             </NavItem>
           </Link>
+          <Link href="/recently-played">
+            <NavItem $active={currentPath === '/recently-played'} onClick={closeSidebar}>
+              <NavIcon>🎵</NavIcon>
+              Recently Played
+            </NavItem>
+          </Link>
         </NavList>
       </Section>
+
+      {!isLoading && (
+        <MusicSection>
+          <MusicTitle>
+            <span>🎵</span>
+            Currently Listening
+          </MusicTitle>
+          {nowPlaying && nowPlaying.isPlaying ? (
+            <>
+              <StatusBadge>
+                <PulsingDot />
+                Now Playing on Spotify
+              </StatusBadge>
+              <NowPlayingCard 
+                href={nowPlaying.songUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <AlbumArt src={nowPlaying.albumImageUrl} alt={nowPlaying.album} />
+                <TrackInfo>
+                  <TrackName>{nowPlaying.title}</TrackName>
+                  <ArtistName>{nowPlaying.artist}</ArtistName>
+                </TrackInfo>
+              </NowPlayingCard>
+            </>
+          ) : (
+            <NotPlaying>Not playing right now</NotPlaying>
+          )}
+        </MusicSection>
+      )}
 
       <StayConnected>
         <ConnectedTitle>Stay Connected</ConnectedTitle>

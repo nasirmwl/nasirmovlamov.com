@@ -5,13 +5,15 @@ import { serialize } from 'next-mdx-remote/serialize';
 import styled from 'styled-components';
 import { getAllPostSlugs, getPostBySlug, BlogPost } from '../../../lib/mdx';
 import MDXComponents from '../../../app/components/modules/blog/MDXComponents';
+import { LAYOUT_CONSTANTS } from '@styles/layout-constants';
 
 const Container = styled.div`
   max-width: 800px;
   width: 100%;
-  padding: 3rem 2rem;
+  padding: 4rem 2rem;
+  margin: 0 auto;
   
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     padding: 2rem 1.5rem;
   }
 `;

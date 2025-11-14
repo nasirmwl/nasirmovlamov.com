@@ -1,25 +1,27 @@
 import { BlogPost, getAllPosts } from '../../lib/mdx';
 import type { GetStaticProps, NextPage } from 'next';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
+import { LAYOUT_CONSTANTS } from '@styles/layout-constants';
 import Link from 'next/link';
 import styled from 'styled-components';
 
 const BlogContainer = styled.div`
   max-width: 800px;
-  padding: 3rem 0;
+  padding: 4rem 2rem;
   width: 100%;
+  margin: 0 auto;
 
-  @media (max-width: 768px) {
-    padding: 1.5rem 1rem;
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    padding: 2rem 1.5rem;
   }
 `;
 
 const Header = styled.header`
-  margin-bottom: 4rem;
+  margin-bottom: 2.5rem;
 
-  @media (max-width: 768px) {
-    margin-bottom: 2rem;
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    margin-bottom: 1.5rem;
   }
 `;
 
@@ -31,7 +33,7 @@ const Title = styled.h1`
   line-height: 1.15;
   letter-spacing: -0.03em;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     font-size: 2.75rem;
     margin-bottom: 0.75rem;
   }
@@ -43,7 +45,7 @@ const Subtitle = styled.p`
   line-height: 1.75;
   margin-bottom: 2rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     margin-bottom: 1rem;
   }
 
@@ -60,57 +62,11 @@ const Subtitle = styled.p`
   }
 `;
 
-const SearchContainer = styled.div`
-  margin-bottom: 3rem;
-
-  @media (max-width: 768px) {
-    margin-bottom: 1.5rem;
-  }
-`;
-
-const SearchInput = styled.input`
-  width: 100%;
-  max-width: 450px;
-  padding: 0.875rem 1.25rem;
-  padding-left: 2.75rem;
-  background: ${(props) => props.theme.colors.gray_1};
-  border: 1px solid ${(props) => props.theme.colors.gray_1};
-  border-radius: 8px;
-  color: ${(props) => props.theme.colors.text};
-  font-size: 0.9375rem;
-  outline: none;
-  transition: border-color 0.2s;
-
-  &:focus {
-    border-color: ${(props) => props.theme.colors.borderLight};
-  }
-
-  &::placeholder {
-    color: ${(props) => props.theme.colors.textMuted};
-  }
-`;
-
-const SearchWrapper = styled.div`
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  max-width: 450px;
-
-  &::before {
-    content: '🔍';
-    position: absolute;
-    left: 0.875rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.125rem;
-  }
-`;
-
 const YearSection = styled.section`
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
 
-  @media (max-width: 768px) {
-    margin-bottom: 2.5rem;
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    margin-bottom: 1.5rem;
   }
 `;
 
@@ -118,43 +74,43 @@ const YearHeader = styled.div`
   display: flex;
   align-items: baseline;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
 
-  @media (max-width: 768px) {
-    margin-bottom: 1rem;
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    margin-bottom: 0.5rem;
   }
 `;
 
 const YearTitle = styled.h2`
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   color: ${(props) => props.theme.colors.text};
   letter-spacing: -0.02em;
 `;
 
 const PostCount = styled.span`
-  font-size: 1rem;
+  font-size: 0.9375rem;
   color: ${(props) => props.theme.colors.textMuted};
 `;
 
 const PostsList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 0.5rem;
 
-  @media (max-width: 768px) {
-    gap: 1rem;
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    gap: 0.5rem;
   }
 `;
 
 const PostItem = styled.article`
   display: flex;
-  gap: 1.5rem;
+  gap: 0.75rem;
   align-items: baseline;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.25rem;
   }
 `;
 
@@ -164,7 +120,7 @@ const PostDate = styled.time`
   min-width: 110px;
   flex-shrink: 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
     min-width: auto;
   }
 `;
@@ -188,13 +144,6 @@ const PostLink = styled.a`
   flex: 1;
 `;
 
-const NoResults = styled.div`
-  text-align: center;
-  padding: 3rem 0;
-  color: ${(props) => props.theme.colors.textMuted};
-  font-size: 1rem;
-`;
-
 interface PostsByYear {
   [year: string]: BlogPost[];
 }
@@ -204,20 +153,9 @@ interface BlogProps {
 }
 
 const Blog: NextPage<BlogProps> = ({ posts }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Group posts by year and filter by search
+  // Group posts by year
   const postsByYear = useMemo(() => {
-    const filtered = posts.filter((post) => {
-      const searchLower = searchQuery.toLowerCase();
-      return (
-        post.title.toLowerCase().includes(searchLower) ||
-        post.description?.toLowerCase().includes(searchLower) ||
-        post.tags?.some((tag) => tag.toLowerCase().includes(searchLower))
-      );
-    });
-
-    return filtered.reduce((acc: PostsByYear, post) => {
+    return posts.reduce((acc: PostsByYear, post) => {
       const year = new Date(post.date).getFullYear().toString();
       if (!acc[year]) {
         acc[year] = [];
@@ -225,10 +163,9 @@ const Blog: NextPage<BlogProps> = ({ posts }) => {
       acc[year].push(post);
       return acc;
     }, {});
-  }, [posts, searchQuery]);
+  }, [posts]);
 
   const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a));
-  const totalPosts = posts.length;
 
   return (
     <BlogContainer>
@@ -237,20 +174,9 @@ const Blog: NextPage<BlogProps> = ({ posts }) => {
         <Subtitle>
           Guides, references, and tutorials on programming, web development, and design.
         </Subtitle>
-
-        <SearchContainer>
-          <SearchWrapper>
-            <SearchInput
-              type="text"
-              placeholder={`Search ${totalPosts} articles...`}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </SearchWrapper>
-        </SearchContainer>
       </Header>
 
-      {years.length > 0 ? (
+      {years.length > 0 && (
         years.map((year) => (
           <YearSection key={year}>
             <YearHeader>
@@ -278,8 +204,6 @@ const Blog: NextPage<BlogProps> = ({ posts }) => {
             </PostsList>
           </YearSection>
         ))
-      ) : (
-        <NoResults>No posts found matching &quot;{searchQuery}&quot;</NoResults>
       )}
     </BlogContainer>
   );
