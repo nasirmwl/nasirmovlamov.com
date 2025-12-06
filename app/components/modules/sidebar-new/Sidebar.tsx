@@ -232,6 +232,12 @@ const ConnectedItem = styled.a`
   }
 `;
 
+const NewsletterItem = styled(ConnectedItem)`
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    display: none;
+  }
+`;
+
 const ConnectedIcon = styled.span`
   font-size: 1.25rem;
   line-height: 1;
@@ -702,10 +708,10 @@ export const Sidebar: React.FC = () => {
       <StayConnected>
         <ConnectedTitle>Stay Connected</ConnectedTitle>
         <ConnectedList>
-          <ConnectedItem href="mailto:nasirmovlamov@gmail.com">
+          <NewsletterItem href="mailto:nasirmovlamov@gmail.com">
             <ConnectedIcon>📧</ConnectedIcon>
             Email Newsletter
-          </ConnectedItem>
+          </NewsletterItem>
           <ConnectedItem
             href="https://github.com/nasirmovlamov"
             target="_blank"
