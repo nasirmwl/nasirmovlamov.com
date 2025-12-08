@@ -1,14 +1,15 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { GlobalContext } from '@store/context/global.context';
+import { LAYOUT_CONSTANTS } from '@styles/layout-constants';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import { LAYOUT_CONSTANTS } from '@styles/layout-constants';
 
 const SidebarContainer = styled.aside<{ $isOpen: boolean }>`
   width: ${LAYOUT_CONSTANTS.SIDEBAR_WIDTH}px;
   min-height: 100vh;
+  box-sizing: content-box;
   background: ${(props) =>
     props.theme.backgrounds?.sidebar || props.theme.colors.backgroundSecondary};
   padding: 2.5rem 2rem;
@@ -124,7 +125,7 @@ const IconButton = styled.button`
 `;
 
 const Section = styled.section`
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
 
   @media (max-width: 768px) {
     margin-bottom: 1.5rem;
@@ -191,7 +192,6 @@ const NavIcon = styled.span`
 `;
 
 const StayConnected = styled.div`
-  margin-top: auto;
 
   @media (max-width: 768px) {
     margin-top: 1.5rem;
@@ -669,43 +669,11 @@ export const Sidebar: React.FC = () => {
         </NavList>
       </Section>
 
-      {!isLoading && (
-        <MusicSection>
-          <MusicTitle>
-            <span>🎵</span>
-            Currently Listening
-          </MusicTitle>
-          {nowPlaying && nowPlaying.isPlaying ? (
-            <>
-              <StatusBadge>
-                <PulsingDot />
-                Now Playing on Spotify
-              </StatusBadge>
-              <NowPlayingCard 
-                href={nowPlaying.songUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <AlbumArt src={nowPlaying.albumImageUrl} alt={nowPlaying.album} />
-                <TrackInfo>
-                  <TrackName>{nowPlaying.title}</TrackName>
-                  <ArtistName>{nowPlaying.artist}</ArtistName>
-                </TrackInfo>
-              </NowPlayingCard>
-            </>
-          ) : (
-            <NotPlaying>Not playing right now</NotPlaying>
-          )}
-        </MusicSection>
-      )}
+
 
       <StayConnected>
         <ConnectedTitle>Stay Connected</ConnectedTitle>
         <ConnectedList>
-          <ConnectedItem href="mailto:nasirmovlamov@gmail.com">
-            <ConnectedIcon>📧</ConnectedIcon>
-            Email Newsletter
-          </ConnectedItem>
           <ConnectedItem
             href="https://github.com/nasirmovlamov"
             target="_blank"
@@ -714,10 +682,7 @@ export const Sidebar: React.FC = () => {
             <ConnectedIcon>💻</ConnectedIcon>
             GitHub
           </ConnectedItem>
-          <ConnectedItem href="/rss.xml">
-            <ConnectedIcon>📡</ConnectedIcon>
-            RSS Feed
-          </ConnectedItem>
+
         </ConnectedList>
       </StayConnected>
       </SidebarContainer>
