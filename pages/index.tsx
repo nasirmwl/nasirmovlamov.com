@@ -218,10 +218,10 @@ const Home: NextPage<HomeProps> = ({ recentPosts }) => {
           </HighlightCard>
 
           <HighlightCard>
-            <HighlightTitle>🚀 Lead Software Engineer at ABB</HighlightTitle>
+            <HighlightTitle>🚀 Senior Software Engineer at NAIC (naic.az)</HighlightTitle>
             <HighlightDescription>
-              Leading frontend development for the Mortgage Tribe, building scalable micro-frontend architectures
-              that automate banking processes. Mentoring junior engineers on best practices and architecture patterns.
+              Building Azerbaijan’s unified Digital Logistics Platform (dlp.gov.az), 
+              streamlining international trade through centralized document management and automated workflows.
             </HighlightDescription>
           </HighlightCard>
 

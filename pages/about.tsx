@@ -233,9 +233,9 @@ const About: NextPage = () => {
       <Header>
         <Title>About Me</Title>
         <Paragraph>
-          Hi, I&apos;m Nasir Movlamov, a Lead Software Engineer at ABB with over 4 years of professional experience
-          in building modern web applications. I hold a Master&apos;s degree in Artificial Intelligence and a
-          Bachelor&apos;s degree in Computer Engineering.
+          Hi, I&apos;m Nasir Movlamov, a Senior Software Engineer at the National Artificial Intelligence Center (NAIC). 
+          I specialize in building modern web applications with over 5 years of professional experience. 
+          I hold a Master&apos;s degree in Artificial Intelligence and a Bachelor&apos;s degree in Computer Engineering.
         </Paragraph>
         <Paragraph>
           I specialize in micro-frontend architectures, React ecosystems, and creating scalable, maintainable
@@ -247,36 +247,54 @@ const About: NextPage = () => {
         <SectionTitle>Experience</SectionTitle>
 
         <ExperienceItem>
+          <JobTitle>Senior Software Engineer</JobTitle>
+          <Company>National Artificial Intelligence Center (NAIC) — naic.az</Company>
+          <Duration>Feb 2026 - Present · Baku, Azerbaijan</Duration>
+          <Description>
+            Building Azerbaijan’s unified Single Window for international trade (dlp.gov.az). 
+            Streamlining end-to-end logistics through centralized document management, real-time tracking, 
+            integrated workflows with government agencies, and automated business process execution.
+          </Description>
+          <SkillsList>
+            <SkillTag>JavaScript</SkillTag>
+            <SkillTag>TypeScript</SkillTag>
+            <SkillTag>React.js</SkillTag>
+          </SkillsList>
+        </ExperienceItem>
+
+        <ExperienceItem>
           <JobTitle>Lead Software Engineer</JobTitle>
           <Company>ABB</Company>
-          <Duration>Oct 2022 - Present · 3 yrs 2 mos · Baku, Azerbaijan (Hybrid)</Duration>
+          <Duration>Oct 2022 - Feb 2026 · 3 yrs 5 mos · Baku, Azerbaijan (Hybrid)</Duration>
           <Description>
-            Currently part of the Mortgage Tribe, developing software to automate mortgage processes.
-            Previously worked in the Digital Innovations Unit, focusing on internal software solutions
-            and developing micro-frontend architecture supporting various banking products.
+            Built and scaled frontend systems powering ABB’s mortgage ecosystem (abbhome.az), 
+            one of the largest mortgage portfolios in Azerbaijan.
           </Description>
           <Description>
             Key achievements include:
           </Description>
           <Description>
-            • Developed and maintained micro-frontend architecture for mortgage workflows<br/>
-            • Wrote and maintained internal documentation for the frontend chapter<br/>
-            • Mentored junior engineers on best practices and architecture patterns
+            • Maintained and implemented a micro-frontend platform for complex mortgage workflows.<br/>
+            • Increased test coverage from 10% → 80%, significantly improving system reliability.<br/>
+            • Implemented Google, Apple, and card payment systems within the mortgage flow.<br/>
+            • Authored and maintained frontend architecture documentation, standardizing practices.<br/>
+            • Mentored junior engineers and drove adoption of clean code and scalable patterns.
           </Description>
           <SkillsList>
-            <SkillTag>Webpack</SkillTag>
-            <SkillTag>React.js</SkillTag>
             <SkillTag>Micro-frontends</SkillTag>
+            <SkillTag>React.js</SkillTag>
+            <SkillTag>TypeScript</SkillTag>
+            <SkillTag>Testing</SkillTag>
           </SkillsList>
         </ExperienceItem>
 
         <ExperienceItem>
           <JobTitle>Software Engineer</JobTitle>
           <Company>A2Z Technologies</Company>
-          <Duration>Apr 2022 - Oct 2022 · 7 mos · Baku, Azerbaijan</Duration>
+          <Duration>Oct 2021 - Oct 2022 · 1 yr 1 mo · Baku, Azerbaijan</Duration>
           <Description>
-            Worked in the ICT Department&apos;s Product Service Development Unit, creating software for
-            internal usage and customer-facing services.
+            Worked in the ICT Department&apos;s Product Service Development Unit, developing proprietary 
+            software solutions for government institutions.
           </Description>
           <SkillsList>
             <SkillTag>React.js</SkillTag>
@@ -286,29 +304,12 @@ const About: NextPage = () => {
         </ExperienceItem>
 
         <ExperienceItem>
-          <JobTitle>Software Engineering Instructor</JobTitle>
-          <Company>Code Academy</Company>
-          <Duration>Jan 2022 - Jun 2022 · 6 mos · Baku, Azerbaijan</Duration>
-          <Description>
-            Taught at Azerbaijan&apos;s most prestigious coding bootcamp. Participated in curriculum development,
-            teaching, and programming competitions. Main responsibilities included teaching &quot;Data Structures
-            and Algorithms&quot; and &quot;Introduction to Programming with Javascript, HTML, CSS.&quot;
-          </Description>
-          <SkillsList>
-            <SkillTag>React.js</SkillTag>
-            <SkillTag>JavaScript</SkillTag>
-            <SkillTag>Data Structures</SkillTag>
-            <SkillTag>Algorithms</SkillTag>
-          </SkillsList>
-        </ExperienceItem>
-
-        <ExperienceItem>
           <JobTitle>Software Engineer</JobTitle>
           <Company>Abyss</Company>
           <Duration>Aug 2021 - Feb 2022 · 7 mos · Azerbaijan</Duration>
           <Description>
-            In this startup environment, handled multiple roles including software requirements analysis,
-            code review, software architecture, deployment, security validation, and software development.
+            In this startup environment, handled end-to-end ownership across requirements analysis, 
+            system design, development, deployment, and security validation.
           </Description>
           <SkillsList>
             <SkillTag>React.js</SkillTag>
@@ -322,13 +323,11 @@ const About: NextPage = () => {
           <Company>JedAi | Digital Marketing Agency</Company>
           <Duration>Oct 2020 - Sep 2021 · 1 yr · Baku, Azerbaijan</Duration>
           <Description>
-            Designed efficient and scalable APIs as well as sophisticated user interfaces for all
-            business and product websites.
+            Built efficient and sophisticated user interfaces for all business and product websites.
           </Description>
           <SkillsList>
             <SkillTag>Bootstrap</SkillTag>
             <SkillTag>React.js</SkillTag>
-            <SkillTag>API Design</SkillTag>
           </SkillsList>
         </ExperienceItem>
       </Section>
