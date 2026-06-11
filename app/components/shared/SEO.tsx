@@ -57,7 +57,7 @@ const SEO: React.FC<SEOProps> = ({
       
       {/* Additional Meta */}
       <link rel="canonical" href={url} />
-      <meta name="theme-color" content="#3498db" />
+      <meta name="theme-color" content="#070a08" />
     </Head>
   );
 };
