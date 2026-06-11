@@ -78,19 +78,11 @@ const SiteTitleLink = styled.a`
   cursor: pointer;
 `;
 
-const SiteLogo = styled.div`
-  width: 40px;
-  height: 40px;
-  background: ${(props) => props.theme.colors.backgroundTertiary};
-  border: 1px solid ${(props) => props.theme.colors.primary};
+const SiteLogo = styled.img`
+  width: 28px;
+  height: 28px;
   border-radius: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: ${(props) => props.theme.colors.primary};
+  display: block;
   box-shadow: 0 0 12px rgba(94, 227, 151, 0.22);
   transition: box-shadow 0.2s;
 
@@ -475,6 +467,13 @@ const MenuButton = styled.button<{ $isOpen: boolean }>`
   }
 `;
 
+const MenuIcon = styled.img`
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  display: block;
+`;
+
 const MenuLabel = styled.span`
   @media (max-width: 480px) {
     display: none;
@@ -571,21 +570,7 @@ export const Sidebar: React.FC = () => {
   return (
     <>
       <MenuButton onClick={toggleSidebar} aria-label="Open menu" $isOpen={isOpen}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <line x1="3" y1="12" x2="21" y2="12" />
-          <line x1="3" y1="6" x2="21" y2="6" />
-          <line x1="3" y1="18" x2="21" y2="18" />
-        </svg>
+        <MenuIcon src="/icon-glyph.svg" alt="" width={20} height={20} />
         <MenuLabel>menu</MenuLabel>
       </MenuButton>
       <Overlay $isOpen={isOpen} onClick={closeSidebar} />
@@ -595,7 +580,7 @@ export const Sidebar: React.FC = () => {
         </CloseButton>
         <TopBar>
           <SiteTitleLink as={Link} href="/" onClick={closeSidebar}>
-            <SiteLogo>NM</SiteLogo>
+            <SiteLogo src="/favicon.svg" alt="nasir.dev logo" width={28} height={28} />
             <SiteName>nasir.dev</SiteName>
           </SiteTitleLink>
         </TopBar>
