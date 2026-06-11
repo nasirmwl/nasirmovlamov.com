@@ -199,10 +199,9 @@ const Home: NextPage<HomeProps> = ({ recentPosts }) => {
       <SEO />
       <HomeContainer>
       <Hero>
-        <Title>Hey, I&apos;m Nasir!</Title>
+        <Title>Nasir Movlamov</Title>
         <Description>
-          I&apos;m a software engineer, open-source creator, and lifelong learner. I&apos;ve been
-          making websites and writing about technology for years!
+          I&apos;m a software engineer who likes building things and learning more about technology along the way.
         </Description>
       </Hero>
 

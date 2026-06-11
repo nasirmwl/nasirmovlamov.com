@@ -643,8 +643,8 @@ export const Sidebar: React.FC = () => {
       <Section>
         <SectionTitle>About Me</SectionTitle>
         <BioText>
-          I&apos;m <Link href="/about" onClick={closeSidebar}>Nasir</Link>, senior software engineer and open-source creator. This
-          is my digital garden. 🌱
+          I&apos;m <Link href="/about" onClick={closeSidebar}>Nasir</Link>, a software engineer who likes building
+          things and learning more about technology along the way.
         </BioText>
       </Section>
 
