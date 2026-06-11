@@ -2,89 +2,48 @@ import type { NextPage } from 'next';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { LAYOUT_CONSTANTS } from '@styles/layout-constants';
-
-const Container = styled.div`
-  max-width: 800px;
-  padding: 4rem 2rem;
-  width: 100%;
-  margin: 0 auto;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    padding: 2rem 1.5rem;
-  }
-`;
-
-const Header = styled.header`
-  margin-bottom: 3rem;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    margin-bottom: 2rem;
-  }
-`;
-
-const Title = styled.h1`
-  font-size: 3.5rem;
-  font-weight: 800;
-  color: ${(props) => props.theme.colors.text};
-  margin-bottom: 1rem;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    font-size: 2.75rem;
-  }
-`;
-
-const Subtitle = styled.p`
-  font-size: 1.125rem;
-  color: ${(props) => props.theme.colors.textSecondary};
-  line-height: 1.75;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    font-size: 1rem;
-  }
-`;
+import { PageShell, TerminalHeader } from '@components/shared/terminal/PageTerminal';
 
 const TracksList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
 `;
 
 const TrackCard = styled.a`
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  padding: 1.25rem;
-  background: ${(props) => props.theme.colors.backgroundSecondary};
+  padding: 1rem;
+  background: ${(props) => props.theme.colors.backgroundSecondary}b3;
   border: 1px solid ${(props) => props.theme.colors.border};
-  border-radius: 12px;
+  border-left: 2px solid ${(props) => props.theme.colors.border};
+  border-radius: 2px;
   text-decoration: none;
-  transition: all 0.2s;
+  transition: border-color 0.2s, transform 0.2s;
   cursor: pointer;
 
   &:hover {
     border-color: ${(props) => props.theme.colors.primary};
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-left-color: ${(props) => props.theme.colors.primary};
+    transform: translateX(2px);
   }
 
   @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    padding: 1rem;
+    padding: 0.85rem;
     gap: 1rem;
   }
 `;
 
 const AlbumArt = styled.img`
-  width: 80px;
-  height: 80px;
-  border-radius: 8px;
+  width: 72px;
+  height: 72px;
+  border-radius: 2px;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 
   @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    width: 64px;
-    height: 64px;
+    width: 60px;
+    height: 60px;
   }
 `;
 
@@ -206,13 +165,12 @@ const RecentlyPlayed: NextPage = () => {
   };
 
   return (
-    <Container>
-      <Header>
-        <Title>🎵 Recently Played</Title>
-        <Subtitle>
-          Tracks I&apos;ve been listening to on Spotify recently.
-        </Subtitle>
-      </Header>
+    <PageShell>
+      <TerminalHeader
+        command="spotify --recently-played"
+        title="Recently Played"
+        subtitle="Tracks I've been listening to on Spotify recently."
+      />
 
       {isLoading ? (
         <Loading>Loading tracks...</Loading>
@@ -238,7 +196,7 @@ const RecentlyPlayed: NextPage = () => {
       ) : (
         <EmptyState>No recently played tracks found.</EmptyState>
       )}
-    </Container>
+    </PageShell>
   );
 };
 

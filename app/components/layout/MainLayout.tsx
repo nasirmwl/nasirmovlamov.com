@@ -11,24 +11,19 @@ const LayoutContainer = styled.div`
 `;
 
 const MainContent = styled.main`
-  margin-left: ${LAYOUT_CONSTANTS.SIDEBAR_WIDTH}px;
   min-height: 100vh;
   display: flex;
   justify-content: center;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    margin-left: 0;
-  }
 `;
 
 const ContentWrapper = styled.div`
   width: 100%;
-  max-width: calc(100vw - ${LAYOUT_CONSTANTS.SIDEBAR_WIDTH}px - 4rem);
+  max-width: 980px;
   display: flex;
-  padding: 0 0.5rem;
+  padding: 4.5rem 1rem 2rem;
 
   @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    padding: 4rem 1rem 1rem 1rem;
+    padding: 4.5rem 1rem 1rem;
     max-width: 100%;
   }
 `;

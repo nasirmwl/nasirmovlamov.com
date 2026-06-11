@@ -1,284 +1,372 @@
 import { BlogPost, getAllPosts } from '../lib/mdx';
 import type { GetStaticProps, NextPage } from 'next';
+import styled, { keyframes } from 'styled-components';
 
 import { LAYOUT_CONSTANTS } from '@styles/layout-constants';
 import Link from 'next/link';
 import SEO from '../app/components/shared/SEO';
-import styled from 'styled-components';
+import { MatrixRain } from '@components/shared/MatrixRain/MatrixRain';
+import { useTypewriter } from '@helpers/hooks/useTypewriter';
+
+const WHOAMI =
+  "I'm a software engineer who likes building things and learning more about technology along the way.";
 
 const HomeContainer = styled.div`
-  max-width: 800px;
-  padding: 4rem 2rem;
+  position: relative;
+  z-index: 1;
+  max-width: 820px;
+  padding: 0.5rem 1rem 3rem;
   width: 100%;
   margin: 0 auto;
 
   @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    padding: 2rem 1rem;
+    padding: 0.5rem 0.5rem 1.5rem;
   }
 `;
 
-const Hero = styled.section`
-  margin-bottom: 5rem;
+const Terminal = styled.div`
+  background: ${(props) => props.theme.colors.backgroundSecondary}d9;
+  border: 1px solid ${(props) => props.theme.colors.border};
+  border-radius: 4px;
+  box-shadow:
+    0 0 0 1px rgba(94, 227, 151, 0.06),
+    0 16px 48px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  backdrop-filter: blur(1px);
 `;
 
-const Title = styled.h1`
-  font-size: 3.5rem;
-  font-weight: 800;
-  color: ${(props) => props.theme.colors.text};
-  margin-bottom: 1.5rem;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    font-size: 2.75rem;
-  }
-`;
-
-const Description = styled.p`
-  font-size: 1.125rem;
-  color: ${(props) => props.theme.colors.textSecondary};
-  height:auto;
-  margin:0;
-  padding:0;
-  a {
-    color: ${(props) => props.theme.colors.link};
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: all 0.2s;
-
-    &:hover {
-      color: ${(props) => props.theme.colors.linkHover};
-      border-bottom-color: ${(props) => props.theme.colors.linkHover};
-    }
-  }
-`;
-
-const Section = styled.section`
-  margin-bottom: 2rem;
-`;
-
-const SectionTitle = styled.h2`
-  font-size: 2.25rem;
-  font-weight: 700;
-  color: ${(props) => props.theme.colors.text};
-  margin-bottom: 0.1rem;
-  letter-spacing: -0.02em;
-`;
-
-const PostsList = styled.div`
+const TerminalBar = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  background: ${(props) => props.theme.colors.background}cc;
+  border-bottom: 1px solid ${(props) => props.theme.colors.border};
 `;
 
-const PostItem = styled.article`
+const Dots = styled.div`
   display: flex;
-  gap: 1rem;
-  align-items: baseline;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
+  gap: 0.5rem;
+  margin-left: auto;
 `;
 
-const PostDate = styled.time`
-  font-size: 0.9375rem;
-  color: ${(props) => props.theme.colors.textMuted};
-  min-width: 110px;
-  flex-shrink: 0;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    min-width: auto;
-  }
-`;
-
-const PostTitle = styled.h3`
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: ${(props) => props.theme.colors.link};
-  text-decoration: none;
-  transition: color 0.15s ease;
-  cursor: pointer;
+const Dot = styled.span<{ $color: string }>`
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: ${(props) => props.$color};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
   line-height: 1;
-  padding: 0;
-  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+  text-shadow: none;
+`;
 
-  &:hover {
-    color: ${(props) => props.theme.colors.linkHover};
+const TermTitle = styled.span`
+  font-size: 0.8125rem;
+  color: ${(props) => props.theme.colors.textTertiary};
+  text-shadow: none;
+`;
+
+const TerminalBody = styled.div`
+  padding: 1.5rem 1.5rem 2rem;
+
+  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
+    padding: 1.25rem 1rem 1.5rem;
   }
 `;
 
-const PostLink = styled.a`
-  text-decoration: none;
-  flex: 1;
+const Line = styled.div`
+  font-size: 0.95rem;
+  line-height: 1.7;
+  word-break: break-word;
 `;
 
-const ViewAllLink = styled(Link)`
-  display: inline-block;
-  margin-top: 1.5rem;
+const Prompt = styled.span`
+  color: ${(props) => props.theme.colors.primary};
+`;
+
+const PromptUser = styled.span`
+  color: ${(props) => props.theme.colors.textTertiary};
+`;
+
+const Command = styled.span`
+  color: ${(props) => props.theme.colors.text};
+`;
+
+const Output = styled.div`
   font-size: 1rem;
-  color: ${(props) => props.theme.colors.link};
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: all 0.15s ease;
+  line-height: 1.7;
+  color: ${(props) => props.theme.colors.textSecondary};
+  margin: 0.35rem 0 0.5rem;
+`;
 
-  &:hover {
-    color: ${(props) => props.theme.colors.linkHover};
-    border-bottom-color: ${(props) => props.theme.colors.linkHover};
-  }
+const blink = keyframes`
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+`;
 
-  &::after {
-    content: ' →';
-  }
+const Cursor = styled.span`
+  display: inline-block;
+  width: 0.6em;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: ${(props) => props.theme.colors.primary};
+  box-shadow: 0 0 8px rgba(94, 227, 151, 0.6);
+  animation: ${blink} 1s step-end infinite;
+`;
+
+const Block = styled.div`
+  margin-top: 1.75rem;
+`;
+
+const CommandLine = styled.div`
+  font-size: 0.95rem;
+  margin-bottom: 0.85rem;
+`;
+
+const Comment = styled.div`
+  color: ${(props) => props.theme.colors.textMuted};
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
 `;
 
 const HighlightsList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  margin-top: 2rem;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    gap: 1rem;
-    margin-top: 1.5rem;
-  }
+  gap: 0.75rem;
 `;
 
 const HighlightCard = styled.div`
-  padding: 2rem;
-  background: ${(props) => props.theme.colors.gray_1};
-  border-radius: 10px;
-  border: 1px solid ${(props) => props.theme.colors.gray_1};
-  transition: all 0.2s ease;
-  width: 100%;
-  box-sizing: border-box;
-
-  &:hover {
-    border-color: ${(props) => props.theme.colors.borderLight};
-    background: ${(props) => props.theme.colors.gray_1}cc;
-  }
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    padding: 1rem;
-    border-radius: 8px;
-  }
+  padding: 1rem 1.15rem;
+  background: ${(props) => props.theme.colors.backgroundTertiary}99;
+  border: 1px solid ${(props) => props.theme.colors.border};
+  border-left: 2px solid ${(props) => props.theme.colors.primary};
+  border-radius: 2px;
 `;
 
 const HighlightTitle = styled.h3`
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
   color: ${(props) => props.theme.colors.text};
-  margin-bottom: 0.625rem;
-  line-height: 1.4;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
+  margin-bottom: 0.4rem;
 `;
 
 const HighlightDescription = styled.p`
-  font-size: 0.9375rem;
+  font-size: 0.9rem;
   color: ${(props) => props.theme.colors.textSecondary};
   line-height: 1.6;
+`;
+
+const PostsList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+`;
+
+const PostItem = styled.div`
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+
+  &::before {
+    content: '>';
+    color: ${(props) => props.theme.colors.primary};
+    flex-shrink: 0;
+  }
 
   @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    font-size: 0.875rem;
-    line-height: 1.5;
+    flex-wrap: wrap;
   }
 `;
+
+const PostDate = styled.time`
+  font-size: 0.85rem;
+  color: ${(props) => props.theme.colors.textMuted};
+  min-width: 120px;
+  flex-shrink: 0;
+`;
+
+const PostLink = styled(Link)`
+  font-size: 0.95rem;
+  color: ${(props) => props.theme.colors.link};
+  flex: 1;
+
+  &:hover {
+    color: ${(props) => props.theme.colors.linkHover};
+    text-decoration: underline;
+  }
+`;
+
+const ViewAllLink = styled(Link)`
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: ${(props) => props.theme.colors.link};
+
+  &::before {
+    content: '$ ';
+    color: ${(props) => props.theme.colors.textMuted};
+  }
+
+  &:hover {
+    color: ${(props) => props.theme.colors.linkHover};
+    text-decoration: underline;
+  }
+`;
+
+const Links = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  font-size: 0.95rem;
+
+  a {
+    color: ${(props) => props.theme.colors.link};
+
+    &::before {
+      content: '- ';
+      color: ${(props) => props.theme.colors.textMuted};
+    }
+
+    &:hover {
+      color: ${(props) => props.theme.colors.linkHover};
+      text-decoration: underline;
+    }
+  }
+`;
+
+const ShellPrompt = ({ command }: { command: string }) => (
+  <CommandLine>
+    <PromptUser>nasir@portfolio</PromptUser>
+    <Prompt>:~$</Prompt> <Command>{command}</Command>
+  </CommandLine>
+);
 
 interface HomeProps {
   recentPosts: BlogPost[];
 }
 
 const Home: NextPage<HomeProps> = ({ recentPosts }) => {
+  const { text: typed, done } = useTypewriter(WHOAMI);
+
   return (
     <>
       <SEO />
+      <MatrixRain />
       <HomeContainer>
-      <Hero>
-        <Title>Nasir Movlamov</Title>
-        <Description>
-          I&apos;m a software engineer who likes building things and learning more about technology along the way.
-        </Description>
-      </Hero>
+        <Terminal>
+          <TerminalBar>
+            <TermTitle>nasir@portfolio — shell</TermTitle>
+            <Dots>
+              <Dot $color="#888888" aria-hidden="true">–</Dot>
+              <Dot $color="#888888" aria-hidden="true">□</Dot>
+              <Dot $color="#e95420" aria-hidden="true">✕</Dot>
+            </Dots>
+          </TerminalBar>
 
-      <Section>
-        <SectionTitle>Highlights</SectionTitle>
-        <HighlightsList>
-          <HighlightCard>
-            <HighlightTitle>💻 Open Source & Tech Writing</HighlightTitle>
-            <HighlightDescription>
-              Passionate about sharing knowledge through blog posts and contributing to open-source projects.
-              Writing about software engineering, React, and technology trends.
-            </HighlightDescription>
-          </HighlightCard>
+          <TerminalBody>
+            <Line>
+              <PromptUser>nasir@portfolio</PromptUser>
+              <Prompt>:~$</Prompt> <Command>whoami</Command>
+            </Line>
+            <Output>
+              {typed}
+              {!done && <Cursor />}
+            </Output>
 
-          <HighlightCard>
-            <HighlightTitle>🚀 Senior Software Engineer at NAIC (naic.az)</HighlightTitle>
-            <HighlightDescription>
-              Building Azerbaijan’s unified Digital Logistics Platform (dlp.gov.az), 
-              streamlining international trade through centralized document management and automated workflows.
-            </HighlightDescription>
-          </HighlightCard>
+            {done && (
+              <>
+                <Block>
+                  <ShellPrompt command="cat highlights.txt" />
+                  <HighlightsList>
+                    <HighlightCard>
+                      <HighlightTitle>Open Source &amp; Tech Writing</HighlightTitle>
+                      <HighlightDescription>
+                        Sharing knowledge through blog posts and contributing to open-source
+                        projects. Writing about software engineering, React, and technology trends.
+                      </HighlightDescription>
+                    </HighlightCard>
 
-          <HighlightCard>
-            <HighlightTitle>🎓 Master&apos;s in Artificial Intelligence</HighlightTitle>
-            <HighlightDescription>
-              Completed advanced studies in AI, covering Neural Networks, Deep Learning, Reinforcement Learning,
-              and Data Mining. Always exploring the intersection of AI and web development.
-            </HighlightDescription>
-          </HighlightCard>
-        </HighlightsList>
-      </Section>
+                    <HighlightCard>
+                      <HighlightTitle>Senior Software Engineer at NAIC (naic.az)</HighlightTitle>
+                      <HighlightDescription>
+                        Building Azerbaijan&apos;s unified Digital Logistics Platform (dlp.gov.az),
+                        streamlining international trade through centralized document management and
+                        automated workflows.
+                      </HighlightDescription>
+                    </HighlightCard>
 
-      <Section>
-        <SectionTitle>Blog</SectionTitle>
-        <PostsList>
-          {recentPosts.map((post) => (
-            <PostItem key={post.slug}>
-              <PostDate dateTime={post.date}>
-                {new Date(post.date).toLocaleDateString('en-US', {
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </PostDate>
-              <PostLink as={Link} href={`/blog/${post.slug}`}>
-                <PostTitle>{post.title}</PostTitle>
-              </PostLink>
-            </PostItem>
-          ))}
-        </PostsList>
-        {recentPosts.length > 0 && (
-          <ViewAllLink href="/blog">View all posts</ViewAllLink>
-        )}
-      </Section>
+                    <HighlightCard>
+                      <HighlightTitle>Master&apos;s in Artificial Intelligence</HighlightTitle>
+                      <HighlightDescription>
+                        Advanced studies in AI covering Neural Networks, Deep Learning,
+                        Reinforcement Learning, and Data Mining. Always exploring the intersection
+                        of AI and web development.
+                      </HighlightDescription>
+                    </HighlightCard>
+                  </HighlightsList>
+                </Block>
 
-      <Section>
-        <SectionTitle>Connect</SectionTitle>
-        <Description>
-          Find me on{' '}
-          <a href="https://github.com/nasirmovlamov" target="_blank" rel="noopener noreferrer">
-            GitHub
-          </a>
-          ,{' '}
-          <a href="https://www.linkedin.com/in/nasirmovlamov/" target="_blank" rel="noopener noreferrer">
-            LinkedIn
-          </a>
-          ,{' '}
-          <a href="https://twitter.com/nasirmovlamov" target="_blank" rel="noopener noreferrer">
-            Twitter
-          </a>
-          , or reach out via{' '}
-          <a href="mailto:nasirmovlamov@gmail.com">
-            email
-          </a>
-          .
-        </Description>
-      </Section>
-    </HomeContainer>
+                <Block>
+                  <ShellPrompt command="ls ~/blog --recent" />
+                  {recentPosts.length === 0 ? (
+                    <Comment># no posts yet</Comment>
+                  ) : (
+                    <PostsList>
+                      {recentPosts.map((post) => (
+                        <PostItem key={post.slug}>
+                          <PostDate dateTime={post.date}>
+                            {new Date(post.date).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric',
+                            })}
+                          </PostDate>
+                          <PostLink href={`/blog/${post.slug}`}>{post.title}</PostLink>
+                        </PostItem>
+                      ))}
+                    </PostsList>
+                  )}
+                  {recentPosts.length > 0 && (
+                    <ViewAllLink href="/blog">cd ~/blog</ViewAllLink>
+                  )}
+                </Block>
+
+                <Block>
+                  <ShellPrompt command="contact --list" />
+                  <Links>
+                    <a
+                      href="https://github.com/nasirmwl"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      GitHub
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/nasirmovlamov/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      LinkedIn
+                    </a>
+                  </Links>
+                </Block>
+
+                <Block>
+                  <Line>
+                    <PromptUser>nasir@portfolio</PromptUser>
+                    <Prompt>:~$</Prompt> <Cursor />
+                  </Line>
+                </Block>
+              </>
+            )}
+          </TerminalBody>
+        </Terminal>
+      </HomeContainer>
     </>
   );
 };

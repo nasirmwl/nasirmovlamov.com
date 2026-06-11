@@ -5,62 +5,7 @@ import React, { useMemo } from 'react';
 import { LAYOUT_CONSTANTS } from '@styles/layout-constants';
 import Link from 'next/link';
 import styled from 'styled-components';
-
-const BlogContainer = styled.div`
-  max-width: 800px;
-  padding: 4rem 2rem;
-  width: 100%;
-  margin: 0 auto;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    padding: 2rem 1.5rem;
-  }
-`;
-
-const Header = styled.header`
-  margin-bottom: 2.5rem;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    margin-bottom: 1.5rem;
-  }
-`;
-
-const Title = styled.h1`
-  font-size: 3.5rem;
-  font-weight: 800;
-  color: ${(props) => props.theme.colors.text};
-  margin-bottom: 1.5rem;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    font-size: 2.75rem;
-    margin-bottom: 0.75rem;
-  }
-`;
-
-const Subtitle = styled.p`
-  font-size: 1.125rem;
-  color: ${(props) => props.theme.colors.textSecondary};
-  line-height: 1.75;
-  margin-bottom: 2rem;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    margin-bottom: 1rem;
-  }
-
-  a {
-    color: ${(props) => props.theme.colors.link};
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: all 0.2s;
-
-    &:hover {
-      color: ${(props) => props.theme.colors.linkHover};
-      border-bottom-color: ${(props) => props.theme.colors.linkHover};
-    }
-  }
-`;
+import { PageShell, TerminalHeader } from '@components/shared/terminal/PageTerminal';
 
 const YearSection = styled.section`
   margin-bottom: 2rem;
@@ -82,10 +27,15 @@ const YearHeader = styled.div`
 `;
 
 const YearTitle = styled.h2`
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: ${(props) => props.theme.colors.text};
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
+
+  &::before {
+    content: '// ';
+    color: ${(props) => props.theme.colors.primary};
+  }
 `;
 
 const PostCount = styled.span`
@@ -168,13 +118,12 @@ const Blog: NextPage<BlogProps> = ({ posts }) => {
   const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a));
 
   return (
-    <BlogContainer>
-      <Header>
-        <Title>Blog</Title>
-        <Subtitle>
-          Guides, references, and tutorials on programming, web development, and design.
-        </Subtitle>
-      </Header>
+    <PageShell>
+      <TerminalHeader
+        command="ls ~/blog --all"
+        title="Blog"
+        subtitle="Guides, references, and tutorials on programming, web development, and design."
+      />
 
       {years.length > 0 && (
         years.map((year) => (
@@ -203,7 +152,7 @@ const Blog: NextPage<BlogProps> = ({ posts }) => {
           </YearSection>
         ))
       )}
-    </BlogContainer>
+    </PageShell>
   );
 };
 

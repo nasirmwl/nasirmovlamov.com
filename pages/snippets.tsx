@@ -2,104 +2,62 @@ import type { NextPage } from 'next';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { LAYOUT_CONSTANTS } from '@styles/layout-constants';
-
-const NotesContainer = styled.div`
-  max-width: 800px;
-  padding: 4rem 2rem;
-  width: 100%;
-  margin: 0 auto;
-  
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    padding: 2rem 1.5rem;
-  }
-`;
-
-const Header = styled.header`
-  margin-bottom: 4rem;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    margin-bottom: 2rem;
-  }
-`;
-
-const Title = styled.h1`
-  font-size: 3.5rem;
-  font-weight: 800;
-  color: ${(props) => props.theme.colors.text};
-  margin-bottom: 1.5rem;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    font-size: 2.75rem;
-    margin-bottom: 0.75rem;
-  }
-`;
-
-const Subtitle = styled.p`
-  font-size: 1.125rem;
-  color: ${(props) => props.theme.colors.textSecondary};
-  line-height: 1.75;
-  margin-bottom: 2rem;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    margin-bottom: 1rem;
-  }
-`;
+import { PageShell, TerminalHeader } from '@components/shared/terminal/PageTerminal';
 
 const FilterContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-bottom: 3rem;
+  gap: 0.5rem;
+  margin: 1rem 0 2rem;
 
   @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    gap: 0.5rem;
     margin-bottom: 1.5rem;
   }
 `;
 
 const FilterButton = styled.button<{ $active: boolean }>`
-  padding: 0.625rem 1.25rem;
-  background: ${(props) => props.$active ? props.theme.colors.primary : props.theme.colors.backgroundSecondary};
-  color: ${(props) => props.$active ? '#ffffff' : props.theme.colors.textSecondary};
-  border: 1px solid ${(props) => props.$active ? props.theme.colors.primary : props.theme.colors.border};
-  border-radius: 8px;
-  font-size: 0.9375rem;
-  font-weight: 500;
+  padding: 0.4rem 0.85rem;
+  background: ${(props) => (props.$active ? props.theme.colors.primary : props.theme.colors.backgroundSecondary)};
+  color: ${(props) => (props.$active ? props.theme.colors.background : props.theme.colors.textSecondary)};
+  border: 1px solid ${(props) => (props.$active ? props.theme.colors.primary : props.theme.colors.border)};
+  border-radius: 2px;
+  font-family: inherit;
+  font-size: 0.85rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s;
+
+  &::before {
+    content: '#';
+    opacity: 0.6;
+    margin-right: 1px;
+  }
 
   &:hover {
-    background: ${(props) => props.$active ? props.theme.colors.primaryHover : props.theme.colors.backgroundTertiary};
-    color: ${(props) => props.$active ? '#ffffff' : props.theme.colors.text};
-    border-color: ${(props) => props.$active ? props.theme.colors.primaryHover : props.theme.colors.borderMedium};
+    border-color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => (props.$active ? props.theme.colors.background : props.theme.colors.text)};
   }
 `;
 
 const NotesGrid = styled.div`
   display: grid;
-  gap: 1.5rem;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    gap: 1rem;
-  }
+  gap: 1rem;
 `;
 
 const NoteCard = styled.article`
-  padding: 2rem;
-  background: ${(props) => props.theme.colors.backgroundSecondary};
-  border-radius: 12px;
+  padding: 1.5rem;
+  background: ${(props) => props.theme.colors.backgroundSecondary}b3;
+  border-radius: 2px;
   border: 1px solid ${(props) => props.theme.colors.border};
-  transition: all 0.2s;
+  border-left: 2px solid ${(props) => props.theme.colors.border};
+  transition: border-color 0.2s;
 
   &:hover {
     border-color: ${(props) => props.theme.colors.primary};
-    transform: translateY(-2px);
+    border-left-color: ${(props) => props.theme.colors.primary};
   }
 
   @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    padding: 1.5rem;
+    padding: 1.1rem;
   }
 `;
 
@@ -120,14 +78,20 @@ const NoteTitle = styled.h3`
 `;
 
 const NoteTag = styled.span`
-  padding: 0.375rem 0.875rem;
-  background: ${(props) => props.theme.colors.primary}15;
+  padding: 0.3rem 0.7rem;
+  background: ${(props) => props.theme.colors.backgroundTertiary};
   color: ${(props) => props.theme.colors.primary};
-  border-radius: 6px;
-  font-size: 0.8125rem;
+  border: 1px solid ${(props) => props.theme.colors.border};
+  border-radius: 2px;
+  font-size: 0.75rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+
+  &::before {
+    content: '#';
+    opacity: 0.6;
+  }
 `;
 
 const NoteContent = styled.div`
@@ -138,14 +102,14 @@ const NoteContent = styled.div`
 `;
 
 const Quote = styled.blockquote`
-  background: ${(props) => props.theme.colors.backgroundSecondary};
-  border-left: 4px solid ${(props) => props.theme.colors.primary};
-  padding: 1.25rem;
-  border-radius: 8px;
+  background: ${(props) => props.theme.colors.backgroundTertiary}80;
+  border-left: 2px solid ${(props) => props.theme.colors.primary};
+  padding: 1rem 1.25rem;
+  border-radius: 2px;
   margin: 1rem 0;
   font-style: italic;
   color: ${(props) => props.theme.colors.text};
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.6;
 `;
 
@@ -267,16 +231,14 @@ const Snippets: NextPage = () => {
     : notes.filter(note => note.tag === selectedTag);
 
   return (
-    <NotesContainer>
-      <Header>
-        <Title>Notes</Title>
-        <Subtitle>
-          Lessons on growth, productivity, and living intentionally. 
-          A collection of insights that have shaped my journey.
-        </Subtitle>
-        
+    <PageShell>
+      <TerminalHeader
+        command="cat ~/notes/*.md"
+        title="Notes"
+        subtitle="Lessons on growth, productivity, and living intentionally. A collection of insights that have shaped my journey."
+      >
         <FilterContainer>
-          {tags.map(tag => (
+          {tags.map((tag) => (
             <FilterButton
               key={tag}
               $active={selectedTag === tag}
@@ -286,7 +248,7 @@ const Snippets: NextPage = () => {
             </FilterButton>
           ))}
         </FilterContainer>
-      </Header>
+      </TerminalHeader>
 
       <NotesGrid>
         {filteredNotes.map(note => (
@@ -309,7 +271,7 @@ const Snippets: NextPage = () => {
           </NoteCard>
         ))}
       </NotesGrid>
-    </NotesContainer>
+    </PageShell>
   );
 };
 

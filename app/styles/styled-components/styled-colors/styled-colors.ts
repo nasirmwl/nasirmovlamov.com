@@ -1,81 +1,80 @@
-// Light Theme Colors
-export const bg_primary = '#fafafa'
-export const bg_secondary = '#ffffff'
-export const bg_tertiary = '#f5f5f5'
+// CRT / Fallout-inspired green phosphor palette.
+// Both light and dark themes share the same terminal aesthetic so the look
+// stays consistent regardless of the toggle.
 
-export const text_primary = '#1a1a1a'
-export const text_secondary = '#4a4a4a'
-export const text_tertiary = '#6b7280'
-export const text_muted = '#9ca3af'
+// --- CRT phosphor tokens ---
+const crt_bg = '#070a08';
+const crt_panel = '#0c100d';
+const crt_bar_track = '#0f1f14';
+const crt_border = '#1a3d28';
+const crt_border_medium = '#2a5a3d';
+const crt_phosphor = '#6aed9f';
+const crt_phosphor_bright = '#b4ffc8';
+const crt_phosphor_dim = '#3d8f5c';
+const crt_muted = '#7cae8f';
+const crt_danger = '#ff6b6b';
 
-export const border_light = '#e5e7eb'
-export const border_medium = '#d1d5db'
-export const border_dark = '#9ca3af'
+// Light Theme Colors (kept on the CRT palette intentionally)
+export const bg_primary = crt_bg;
+export const bg_secondary = crt_panel;
+export const bg_tertiary = crt_bar_track;
 
-export const accent_primary = '#6366f1'
-export const accent_hover = '#4f46e5'
-export const accent_light = '#818cf8'
+export const text_primary = crt_phosphor_bright;
+export const text_secondary = crt_phosphor;
+export const text_tertiary = crt_muted;
+export const text_muted = crt_phosphor_dim;
 
-export const code_bg = '#f3f4f6'
-export const code_text = '#374151'
-export const code_border = '#e5e7eb'
+export const border_light = crt_border;
+export const border_medium = crt_border_medium;
+export const border_dark = crt_phosphor_dim;
+
+export const accent_primary = crt_phosphor;
+export const accent_hover = crt_phosphor_bright;
+export const accent_light = crt_phosphor_bright;
+
+export const code_bg = crt_bar_track;
+export const code_text = crt_phosphor_bright;
+export const code_border = crt_border;
 
 // Dark Theme Colors
-export const dark_bg_primary = '#0e0e0e'
-export const dark_bg_secondary = '#1a1a1a'
-export const dark_bg_tertiary = '#1e1e1e'
+export const dark_bg_primary = crt_bg;
+export const dark_bg_secondary = crt_panel;
+export const dark_bg_tertiary = crt_bar_track;
 
-export const dark_text_primary = '#ffffff'
-export const dark_text_secondary = '#d4d4d4'
-export const dark_text_tertiary = '#a0a0a0'
-export const dark_text_muted = '#6b7280'
+export const dark_text_primary = crt_phosphor_bright;
+export const dark_text_secondary = crt_phosphor;
+export const dark_text_tertiary = crt_muted;
+export const dark_text_muted = crt_phosphor_dim;
 
-export const dark_border_light = '#2a2a2a'
-export const dark_border_medium = '#3a3a3a'
-export const dark_border_dark = '#4a4a4a'
+export const dark_border_light = crt_border;
+export const dark_border_medium = crt_border_medium;
+export const dark_border_dark = crt_phosphor_dim;
 
-export const dark_accent_primary = '#e879f9'
-export const dark_accent_hover = '#c026d3'
-export const dark_accent_light = '#f0abfc'
+export const dark_accent_primary = crt_phosphor;
+export const dark_accent_hover = crt_phosphor_bright;
+export const dark_accent_light = crt_phosphor_bright;
 
-export const dark_code_bg = '#1e1e1e'
-export const dark_code_text = '#d4d4d4'
-export const dark_code_border = '#2a2a2a'
+export const dark_code_bg = crt_bar_track;
+export const dark_code_text = crt_phosphor_bright;
+export const dark_code_border = crt_border;
 
-// Legacy colors for dark theme (keep for reference)
-export const black_1 = '#0e0e0e'
-export const black_2 = '#1a1a1a'
+// Legacy color aliases (still referenced by some components)
+export const black_1 = crt_bg;
+export const black_2 = crt_panel;
 
-export const gray_1 = '#1e1e1e'
-export const gray_2 = '#606060'
-export const gray_3 = '#8a8a8a'
-export const gray_4 = '#b0b0b0'
+export const gray_1 = crt_panel;
+export const gray_2 = crt_border_medium;
+export const gray_3 = crt_phosphor_dim;
+export const gray_4 = crt_muted;
 
-export const white_1 = '#ffffff'
-export const white_2 = '#d4d4d4'
-export const white_3 = '#a0a0a0'
+export const white_1 = crt_phosphor_bright;
+export const white_2 = crt_phosphor;
+export const white_3 = crt_muted;
 
-export const pink_1 = '#e879f9'
-export const pink_2 = '#c026d3'
-export const pink_3 = '#a21caf'
+export const pink_1 = crt_phosphor;
+export const pink_2 = crt_phosphor_bright;
+export const pink_3 = crt_phosphor_dim;
 
-export const blue_1 = '#3b82f6'
+export const blue_1 = crt_phosphor;
 
-// export const gray_3 = '#949597'
-// export const gray_4 = '#6c6d6f'
-// export const gray_5 = '#49505B'
-// export const gray_6 = '#373a3f'
-
-// export const white_1 = '#ececec'
-// export const white_2 = '#F1F2F4'
-
-// export const blue_1 = '#A6C6DE'
-// export const blue_2 = '#8CAFCE'
-// export const blue_3 = '#7B9FC4'
-
-// export const orange_1 = '#FFB742'
-// export const orange_2 = '#F79E35'
-
-// export const green_1 = '#2AB280'
-
-// export const red_1 = '#C25450'
+export const red_1 = crt_danger;

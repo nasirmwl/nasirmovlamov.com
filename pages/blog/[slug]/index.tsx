@@ -11,11 +11,11 @@ import SEO from '../../../app/components/shared/SEO';
 const Container = styled.div`
   max-width: 800px;
   width: 100%;
-  padding: 4rem 2rem;
+  padding: 0.5rem 1rem 3rem;
   margin: 0 auto;
   
   @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    padding: 2rem 1.5rem;
+    padding: 0.5rem 0.5rem 2rem;
   }
 `;
 
@@ -23,6 +23,16 @@ const Header = styled.header`
   margin-bottom: 4rem;
   padding-bottom: 2.5rem;
   border-bottom: 1px solid ${(props) => props.theme.colors.border};
+`;
+
+const Prompt = styled.div`
+  font-size: 0.9rem;
+  color: ${(props) => props.theme.colors.textTertiary};
+  margin-bottom: 1.25rem;
+
+  span {
+    color: ${(props) => props.theme.colors.primary};
+  }
 `;
 
 const Title = styled.h1`
@@ -266,6 +276,9 @@ const BlogPostPage: NextPage<BlogPostPageProps> = ({ post, mdxSource }) => {
       />
       <Container>
         <Header>
+          <Prompt>
+            nasir@portfolio<span>:~$</span> cat ~/blog/{post.slug}.mdx
+          </Prompt>
           <Title>{post.title}</Title>
           {post.description && <Description>{post.description}</Description>}
           <Meta>

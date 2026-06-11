@@ -5,45 +5,23 @@ import type { NextPage } from 'next';
 import axios from 'axios';
 import { getAccessToken } from '@helpers/api/spotify';
 import styled from 'styled-components';
-
-const AboutContainer = styled.div`
-  max-width: 800px;
-  padding: 4rem 2rem;
-  width: 100%;
-  margin: 0 auto;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    padding: 2rem 1.5rem;
-  }
-`;
-
-const Header = styled.header`
-  margin-bottom: 3rem;
-`;
-
-const Title = styled.h1`
-  font-size: 3.5rem;
-  font-weight: 800;
-  color: ${(props) => props.theme.colors.text};
-  margin-bottom: 1.5rem;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-
-  @media (max-width: ${LAYOUT_CONSTANTS.MOBILE_BREAKPOINT}px) {
-    font-size: 2.75rem;
-  }
-`;
+import { PageShell, TerminalHeader } from '@components/shared/terminal/PageTerminal';
 
 const Section = styled.section`
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 1.75rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: ${(props) => props.theme.colors.text};
   margin-bottom: 1.25rem;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
+
+  &::before {
+    content: '// ';
+    color: ${(props) => props.theme.colors.primary};
+  }
 `;
 
 const Paragraph = styled.p`
@@ -109,12 +87,17 @@ const SkillsList = styled.div`
 `;
 
 const SkillTag = styled.span`
-  padding: 0.375rem 0.875rem;
-  background: ${(props) => props.theme.colors.gray_1};
+  padding: 0.3rem 0.7rem;
+  background: ${(props) => props.theme.colors.backgroundTertiary};
   color: ${(props) => props.theme.colors.textSecondary};
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-weight: 500;
+  border: 1px solid ${(props) => props.theme.colors.border};
+  border-radius: 2px;
+  font-size: 0.8rem;
+
+  &::before {
+    content: '> ';
+    color: ${(props) => props.theme.colors.primary};
+  }
 `;
 
 const LinksList = styled.div`
@@ -124,27 +107,30 @@ const LinksList = styled.div`
 `;
 
 const LinkItem = styled.a`
-  font-size: 1.125rem;
+  font-size: 1rem;
   color: ${(props) => props.theme.colors.link};
   text-decoration: none;
   transition: color 0.15s ease;
 
   &:hover {
     color: ${(props) => props.theme.colors.linkHover};
+    text-decoration: underline;
   }
 
   &::before {
-    content: '→ ';
-    margin-right: 0.5rem;
+    content: '> ';
+    color: ${(props) => props.theme.colors.primary};
+    margin-right: 0.4rem;
   }
 `;
 
 const SpotifyContainer = styled.div`
   margin-top: 1.5rem;
-  padding: 1.5rem;
-  background: ${(props) => props.theme.colors.gray_1};
-  border-radius: 8px;
-  border: 1px solid ${(props) => props.theme.colors.borderLight};
+  padding: 1.25rem;
+  background: ${(props) => props.theme.colors.backgroundTertiary}80;
+  border-radius: 2px;
+  border: 1px solid ${(props) => props.theme.colors.border};
+  border-left: 2px solid ${(props) => props.theme.colors.primary};
 `;
 
 const SpotifyStatus = styled.div`
@@ -229,9 +215,10 @@ const About: NextPage = () => {
   }, []);
 
   return (
-    <AboutContainer>
-      <Header>
-        <Title>About Me</Title>
+    <PageShell>
+      <TerminalHeader command="cat about.md" title="About Me" />
+
+      <Section>
         <Paragraph>
           Hi, I&apos;m Nasir Movlamov, a Senior Software Engineer at the National Artificial Intelligence Center (NAIC). 
           I specialize in building modern web applications with over 5 years of professional experience. 
@@ -241,10 +228,10 @@ const About: NextPage = () => {
           I specialize in micro-frontend architectures, React ecosystems, and creating scalable, maintainable
           software solutions. I&apos;m passionate about testing, code quality, and mentoring junior engineers.
         </Paragraph>
-      </Header>
+      </Section>
 
       <Section>
-        <SectionTitle>Experience</SectionTitle>
+        <SectionTitle>experience</SectionTitle>
 
         <ExperienceItem>
           <JobTitle>Senior Software Engineer</JobTitle>
@@ -333,7 +320,7 @@ const About: NextPage = () => {
       </Section>
 
       <Section>
-        <SectionTitle>Education</SectionTitle>
+        <SectionTitle>education</SectionTitle>
 
         <ExperienceItem>
           <JobTitle>Master&apos;s Degree in Artificial Intelligence</JobTitle>
@@ -356,14 +343,14 @@ const About: NextPage = () => {
       </Section>
 
       <Section>
-        <SectionTitle>Currently Listening 🎵</SectionTitle>
+        <SectionTitle>currently listening</SectionTitle>
         {loading === 'pending' ? (
           <SpotifyContainer>
             <SpotifyStatus>Loading...</SpotifyStatus>
           </SpotifyContainer>
         ) : spotifyData && spotifyData.is_playing ? (
           <SpotifyContainer>
-            <SpotifyStatus>🎧 Now Playing on Spotify</SpotifyStatus>
+            <SpotifyStatus>now playing on spotify</SpotifyStatus>
             <SpotifyContent
               href={spotifyData.item.external_urls.spotify}
               target="_blank"
@@ -387,23 +374,17 @@ const About: NextPage = () => {
       </Section>
 
       <Section>
-        <SectionTitle>Connect</SectionTitle>
+        <SectionTitle>connect</SectionTitle>
         <LinksList>
-          <LinkItem href="https://github.com/nasirmovlamov" target="_blank" rel="noopener noreferrer">
-            GitHub @nasirmovlamov
+          <LinkItem href="https://github.com/nasirmwl" target="_blank" rel="noopener noreferrer">
+            GitHub @nasirmwl
           </LinkItem>
           <LinkItem href="https://www.linkedin.com/in/nasirmovlamov/" target="_blank" rel="noopener noreferrer">
             LinkedIn @nasirmovlamov
           </LinkItem>
-          <LinkItem href="https://twitter.com/nasirmovlamov" target="_blank" rel="noopener noreferrer">
-            Twitter @nasirmovlamov
-          </LinkItem>
-          <LinkItem href="mailto:nasirmovlamov@gmail.com">
-            Email nasirmovlamov@gmail.com
-          </LinkItem>
         </LinksList>
       </Section>
-    </AboutContainer>
+    </PageShell>
   );
 };
 
